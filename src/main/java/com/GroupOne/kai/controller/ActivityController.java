@@ -24,7 +24,7 @@ import com.GroupOne.kai.service.RecordParticipantService;
 
 @Controller
 public class ActivityController {
-
+//
 	ActivityService activityService;
 	RecordParticipantService recordParticipantService;
 	//mail
