@@ -60,11 +60,17 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
             width: 340px;
             height: 350px;
             background: #FFF;
+           	
+        }
+        .cards {
+        	
+           	display: none;
         }
 
             /* item1 */
             .card .item1 {
                 width: 100%;
+   
             }
 
 
@@ -72,6 +78,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                     border-radius: 16px 16px 0 0;
                     display: block;
                     width: 100%;
+                    
                 }
 
             /* item2 */
@@ -142,7 +149,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
         }
         /*activity*/
         .row {
-            padding: 50px 0 10px;
+            padding: 30px 0 10px;
         }
 
         .carousel-item {
@@ -241,9 +248,33 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
         ._footer ul {
             list-style-type: disc;
         }
+        
+        /* Filter DIV Elements */
+        
+        .show {
+ 			 display: block;
+		}
+		
+		
+		/* Style the buttons */
+        .bttn {
+
+            padding: 12px 16px;
+            cursor: pointer;
+        }
+
+        .bttn:hover {
+            
+        }
+
+        .bttn.activee {
+           
+         }
+        
+            
 </style>
 <script>
-       
+       //navbar float
         window.addEventListener('scroll', function (e) {
             var method = window.scrollY <= 10 ? 'add' : 'remove'
             document.getElementsByClassName('second_navbar')[0].classList[method]("active");
@@ -268,6 +299,50 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                 });
             }
         })
+        
+     //Filter DIV Elements
+     filterSelection("all")
+        function filterSelection(c) {
+            var x, i;
+            x = document.getElementsByClassName("cards");
+            if (c == "all") c = "";
+            for (i = 0; i < x.length; i++) {
+                w3RemoveClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+            }
+        }
+
+        function w3AddClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) { element.className += " " + arr2[i]; }
+            }
+        }
+
+        function w3RemoveClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+
+        // Add active class to the current button (highlight it)
+        var btnContainer = document.getElementById("myBtnContainer");
+        var btns = btnContainer.getElementsByClassName("bttn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("activee");
+                current[0].className = current[0].className.replace(" activee", "");
+                this.className += " activee";
+            });
+        }
 </script>
 <body>
 	<!--nar bar first-->
@@ -357,17 +432,25 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
             <span class="sr-only">Next</span>
         </a>
     </div>
-
-
+    
+	<!--篩選-->
+		<div id="myBtnContainer" class="" style="margin-left: 210px;">
+	        <button class="bttn activee btn btn-outline-warning font-weight-bold" onclick="filterSelection('all')">全部</button>
+	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('體驗')">體驗</button>
+	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('宣傳活動')">宣傳活動</button>
+	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('比賽')">比賽</button>
+	        
+	    </div>
+	    
     <!--各式活動-->
     <div class="container">
-        <div class="row">
+        <div class="row ">
             <!-- JAVA  -->
    
             <c:forEach var="activityPage" items="${activityListPage}">
-                <div class="col-md-4 cn">
+                <div class="col-md-4 cn cards show ${activityPage.style} ">
                     <div class="card">
-                        <div class="item1">
+                        <div class="item1 ">
                         <!--    <a href="http://localhost:60810/index%20(2).html"></a><br> -->
                         <!-- 讀取圖片 -->
                				
@@ -379,7 +462,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                                 <a href="<c:url value='/activitypage?id=${activityPage.id}' />" class="text-decoration-none text-dark" style=" font-size:18px;">
                                 <h6 class="font-weight-bold ">   <c:out value="${activityPage.topic}" /> </a>  </h6>
                             </div>
-                            <div class="tagWrapper">
+                            <div class="tagWrapper ">
                                 <span class="hashtag font-weight-bold" style="color:blue; font-size:14px;">  <c:out value="${activityPage.style}" />   </span>
                                  <a href="<c:url value='/activitypage?id=${activityPage.id}' />">
                                 <button type="button" class="btn btn-outline-danger float-right" value="">
@@ -393,7 +476,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
             <!--  -->
         </div>
     </div>
-    
+    <!-- Footer Data -->
    	<div class="block top-padd80 bottom-padd80 dark-bg _footer">
         <div class="container">
             <div class="row">
