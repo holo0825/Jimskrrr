@@ -8,9 +8,10 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	$('tbody').on('click', '.delete', function () { //刪除
 		$(this).closest('tr').remove();
@@ -56,23 +57,23 @@ $(document).ready(function(){
 
 </head>
 <body>
-	<!-- 
-	< %
+	
+	<%
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出管理員登入');");
+	    out.println("alert('權限不足，請先登入');");
 // 	    out.println("window.location.href='index.jsp';");
 	    out.println("window.location.href='../index';");
 	    out.println("</script>");
-	}
+	}/*
 	if(session.getAttribute("admin") != null) {
 	    out.println("<script>");
 	    out.println("alert('您已經登入');");
 	    //out.println("window.location.href='sellerCenter.jsp';");
 	    out.println("</script>");
-	}
+	}*/
 	%>
-	 -->
+	 
 	
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
@@ -112,7 +113,7 @@ $(document).ready(function(){
 				<a href="..\SellerAll\listseller" class="btn btn-success" >Select
 					All Sellers</a>
 					
-				<button type="button" class="findAll">AjaxFindAll</button>								
+				<button type="button" class="btn btn-primary findAll" >AjaxFindAll</button>								
 
 					<br>
 				  <!-- <form class="form-inline">
@@ -121,7 +122,8 @@ $(document).ready(function(){
 				  </form>  -->
 			</div>
 			<br>
-			<table class="table table-bordered table-hover">
+			<table id="myTable" class="table table-striped table-bordered table-hover table-sm">
+				<caption>所有賣家用戶資料</caption>
 				<thead>
 					<tr>
 <!-- 						<th>ID</th> -->
@@ -139,19 +141,19 @@ $(document).ready(function(){
 <!-- 						<th>verifyStatus</th> -->
 <!-- 						<th>Actions</th> -->
 						<th>ID</th>
-						<th>username</th>
-						<th>fullname</th>
-						<th>dob</th>
-						<th>gender</th>
+						<th>帳號</th>
+						<th>姓名</th>
+						<th>出生年月日</th>
+						<th>性別</th>
 						<th>email</th>
-						<th>phoneNumber</th>
-						<th>telephoneNumber</th>
-						<th>extensionNumber</th>
-						<th>companyName</th>
-						<th>companyAddress</th>
-						<th>businessCert</th>
-						<th>verifyStatus</th>
-						<th>Actions</th>
+						<th>手機號碼</th>
+						<th>公司電話</th>
+						<th>分機號碼</th>
+						<th>公司名稱</th>
+						<th>公司地址</th>
+						<th>營業登記證明</th>
+						<th>審核狀態</th>
+						<th>編輯選項</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -173,12 +175,12 @@ $(document).ready(function(){
 							<td><c:out value="${seller.businessCert}" /></td>
 							<td><c:out value="${seller.verifyStatus}" /></td>
 <%-- 							<td><a href=".\SellerAll?action=editseller&id=<c:out value='${seller.id}' />">Edit</a> --%>
-							<td><a href="..\SellerAll\editseller\<c:out value='${seller.id}' />">Edit</a>
+							<td><a href="..\SellerAll\editseller\<c:out value='${seller.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆賣家資料');">編輯</button></a>
 								&nbsp;&nbsp;&nbsp;&nbsp; 
 <%-- 							<a href=".\SellerAll?action=deleteseller&id=<c:out value='${seller.id}' />">Delete</a></td> --%>
-								<a href="..\SellerAll\deleteseller\<c:out value='${seller.id}' />">Delete</a></td>
+								<a href="..\SellerAll\deleteseller\<c:out value='${seller.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td>
 <%-- 							<td><a href="..\SellerAll\ajaxdeleteseller\<c:out value='${seller.id}' />"><button id="ajaxDelete">AjaxDelete</button></a></td> --%>
-							<td><button type="button" class="delete">AjaxDelete</button></td>								
+							<td><button type="button" class="btn btn-primary delete" >AjaxDelete</button></td>								
 						</tr>
 					</c:forEach>
 					<!-- } -->

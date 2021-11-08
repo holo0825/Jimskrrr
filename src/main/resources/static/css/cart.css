@@ -1,60 +1,39 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background: #333;
-    color: lightgreen;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-#container {
-    width: 800px;
+.shopping_div {
+/*     width: 1000px; */
+    width: 100%;
     margin: auto;
-    border: 3px solid black;
 }
-
-table {
+.shopping_table {
+/*     width: 1000px; */
+    width: 100%;
     border-collapse: collapse;
 }
-
-tr td,
-th {
-    /* border: 1px solid blue; */
+.shopping_thead {
+    background-color:rgb(172, 18, 18);
+    color:rgb(248, 242, 242);
     height: 50px;
 }
-
-thead {
-    background-color: rgb(248, 232, 232);
-}
-
 .itr {
-
     border-bottom: 1px dashed black;
-}
-
+ }
 .pn {
-    width: 400px;
+    width: 65%;
 }
-
 .pr {
-    width: 100px;
+    width: 15%;
 }
-
 .nu {
-    width: 115px;
+    width: 15%;
 }
-
-
 .tdB {
-    width: 50px;
+    width: 5%;
 }
-
+.pn,.pr,.nu,.tdB,.number,.tdalign,.tdnu,.tbdel{
+    text-align: center;
+}
 .ap {
-    width: 80px;
+    width: 100px;
+    height: 50px;
     border-bottom: 1px dashed black;
 }
 #app,#apa,#disa,#disp{
@@ -62,11 +41,38 @@ thead {
     font-size: 22.5px;
 
 }
+.tap2{
+    float: right;
+}
+.confirm{
+    clear: both;
+    text-align: center;
+}
+.tp{
+    padding-left: 5px;
+}
+.number::-webkit-outer-spin-button,
+.number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.number{
+    width: 50px;
+}
 .tdimg{
-	width :100px;
+	width:15%;
 	height : 100px
 }
 .img{
 	max-width:100px;
 	max-height:100px;
+}
+#noBuy{
+	background-color:rgb(172, 18, 18);
+   	color: rgb(248, 242, 242);
+   	height: 100px;
+   	text-align: center;
+   	line-height:100px;
+}
+.fa-trash-alt,.fa-minus,.fa-plus{
+	color: rgb(172, 18, 18);
 }

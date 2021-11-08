@@ -16,7 +16,7 @@ public class AdminBean implements Serializable {
 
 	@Id @Column(name="ID")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	
 	@Column(name="USERNAME")
 	private String username;

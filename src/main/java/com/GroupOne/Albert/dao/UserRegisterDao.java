@@ -12,4 +12,5 @@ public interface UserRegisterDao extends JpaRepository<UserBean, Integer>{
 
 //	String registerUser(UserBean userBean);
 
+	UserBean findByUsername(String username);
 }

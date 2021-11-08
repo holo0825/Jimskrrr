@@ -25,7 +25,7 @@ import com.GroupOne.Albert.model.SellerBean;
 import com.GroupOne.Albert.service.AdminLoginLogoutService;
 
 @Controller
-//@SessionAttributes("admin")
+@SessionAttributes("admin")
 public class AdminLoginController{
 
 		AdminLoginLogoutService allService;
@@ -37,34 +37,38 @@ public class AdminLoginController{
 			this.servletContext = servletContext;
 		}
 		
-		// 進入登入頁面前的Controller方法，預備@ModelAttribute的admin屬性物件
+		// 進入登入頁面前的Controller方法，檢查session是否登入狀態，預備@ModelAttribute的admin屬性物件
 		@GetMapping("/AdminTryLogin")
 		public String adminTryLogin(Model model) {
-//		public String adminTryLogin(@ModelAttribute("admin") AdminBean existingAdmin, Model model) {
-//			if (existingAdmin != null) {
-//				return "index";
-//			}else {
-				AdminBean admin = new AdminBean();
-//			AdminBean admin = null; // 千萬不可以設定為null，下一頁的modelAttribute必須接受一個名為admin的物件
-				model.addAttribute("admin", admin);
-				return "adminLogin";
-				// adminLogin.jsp 為管理者登入頁面
-//			}
+//		public String adminTryLogin(Model model, HttpServletRequest request) {
+			
+//			AdminBean existingAdmin = (AdminBean)request.getSession().getAttribute("admin");
+			AdminBean existingAdmin = (AdminBean)model.getAttribute("admin");
+
+			if (existingAdmin != null) {
+				return "adminDash";
+			}
+			AdminBean adminLoginBean = new AdminBean();
+//			AdminBean admin = null; // 千萬不可以設定為null，下一頁的modelAttribute必須接受一個名為adminLoginBean的物件
+			model.addAttribute("adminLoginBean", adminLoginBean);
+			// adminLogin.jsp 為管理者登入頁面
+			return "adminLogin";
 		}
 		
-//		@ModelAttribute("admin")
+//		@ModelAttribute("adminLoginBean")
 //		 public AdminBean getAdminBean() {
 //		  return new AdminBean();
 //		 }
 		
 //		@PostMapping("/Adminlogin")
 		@GetMapping("/Adminlogin")
-		public String checkLogin(@RequestParam(required = false) String username,
-								 @RequestParam(required = false) String password,
-								 @RequestParam(required = false) String email,
+		public String checkLogin(
+//								 @RequestParam(required = false) String username,
+//								 @RequestParam(required = false) String password,
+//								 @RequestParam(required = false) String email,
 								 Model model,
 								 RedirectAttributes redirectAttributes,
-								 @ModelAttribute("admin") AdminBean aBean,
+								 @ModelAttribute("adminLoginBean") AdminBean adminLoginBean,
 								 BindingResult bindingResult,
 								 HttpServletRequest request) {
 			
@@ -76,32 +80,37 @@ public class AdminLoginController{
 //		SessionFactory factory = HibernateUtil.getSessionFactory();
 //		Session factorySession = factory.getCurrentSession();
 //		AdminDAO adminDao = new AdminDAO(factorySession);
+			// 先判斷管理員是否已經登入，如果已經登入就導回到管理員首頁
+//			HttpSession session = request.getSession();
+//			AdminBean existingAdmin = (AdminBean)session.getAttribute("admin");
+			AdminBean existingAdmin = (AdminBean)model.getAttribute("admin");
+			if (existingAdmin != null) {
+				return "forward:/AdminHome";
+			}
 			
 			AdminBean admin;
 //			String destPage = "adminLogin.jsp";
-			String destPage = "adminLogin";
+			String destPage = "AdminTryLogin";
 			
-			if (aBean!=null) {
+			if (adminLoginBean!=null) {
 //			AdminBean admin = adminDao.checkLogin(username, password, email);
 //				admin = allService.checkLogin(username, password, email);
 //				admin = allService.checkLogin(aBean.getUsername(), aBean.getPassword(), aBean.getEmail());
-				admin = allService.findByUsernameAndPasswordAndEmail(aBean.getUsername(), aBean.getPassword(), aBean.getEmail());
+				admin = allService.findByUsernameAndPasswordAndEmail(
+						adminLoginBean.getUsername(), adminLoginBean.getPassword(), adminLoginBean.getEmail());
 				
 				if (admin != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("admin", admin);
+//				session = request.getSession();
+//				session.setAttribute("admin", admin);
 //				destPage = "adminDash.jsp";
-					
 					model.addAttribute("admin", admin);
-//					redirectAttributes.addAttribute("admin", admin);
-					destPage = "adminDash";
-					
-					return "adminDash";
+					return "forward:/AdminHome";
 				} else {
 					String message = "帳號密碼輸入錯誤或不存在此帳號";
 //				request.setAttribute("message", message);
 					admin = new AdminBean();
 					model.addAttribute("admin", admin);
+//					redirectAttributes.addAttribute("admin", admin);
 					model.addAttribute("message", message);
 				}
 			}
@@ -109,9 +118,24 @@ public class AdminLoginController{
 
 //			RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
 //			dispatcher.forward(request, response);
-//			return "redirect:/" + destPage;
-			return destPage;
+			return "forward:/" + destPage;
+//			return destPage;
 			
 		}
-
+		
+		
+		@GetMapping("/AdminHome")
+		public String adminHome(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+//			AdminBean existingAdmin = (AdminBean)request.getSession().getAttribute("admin");
+			AdminBean existingAdmin = (AdminBean)model.getAttribute("admin");
+			if (existingAdmin != null) {
+				return "adminDash";
+			}else {
+				String message = "尚未登入或權限不足";
+				redirectAttributes.addFlashAttribute("message", message);
+//				model.addAttribute("message", message);
+				return "redirect:/AdminTryLogin";
+			}
+		}
+			
 }

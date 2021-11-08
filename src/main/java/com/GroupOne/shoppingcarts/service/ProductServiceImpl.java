@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.GroupOne.Albert.model.UserBean;
 import com.GroupOne.shoppingcarts.model.CartsBean;
 import com.GroupOne.shoppingcarts.model.ListBean;
 import com.GroupOne.shoppingcarts.repository.CartsRepository;
@@ -15,6 +18,7 @@ import com.GroupOne.shoppingcarts.repository.UserPointRepository;
 
 @Repository
 @Transactional
+//@CacheConfig(cacheNames = "listtest")
 public class ProductServiceImpl implements ProductService{
 
 	CartsRepository cartsRepository;
@@ -22,12 +26,12 @@ public class ProductServiceImpl implements ProductService{
 	UserPointRepository userPointRepository;
 	
 	@Autowired
-	public ProductServiceImpl(CartsRepository cartsRepository, ListRepository listRepository
+	public ProductServiceImpl(CartsRepository cartsRepository, ListRepository listRepository,UserPointRepository userPointRepository
 			) {
 		super();
 		this.cartsRepository = cartsRepository;
 		this.listRepository = listRepository;
-//		this.userPointRepository = userPointRepository;
+		this.userPointRepository = userPointRepository;
 	}
 
 	//Cart
@@ -62,9 +66,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void updateAmountAndPointsAndPaydayByUsernameAndItemNO(int amount, float points, Date payday,
-			String username, int itemNo) {
-		cartsRepository.updateAmountAndPointsAndPaydayByUsernameAndItemNO(amount, points, payday, username, itemNo);
+	public void updateAmountAndPointsAndPaydayByUsernameAndItemNo(int amount, float points,Date payday, int dicount, int disAmount, String transactionalNum, String username, int itemNo) {
+		cartsRepository.updateAmountAndPointsAndPaydayByUsernameAndItemNo(amount, points, payday, dicount, disAmount, transactionalNum, username, itemNo);;
 		cartsRepository.flush();
 	}
 
@@ -80,6 +83,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+//	@Cacheable(key="#p0")
 	public List<ListBean> findByItemNo(int itemNo) {
 		return listRepository.findByItemNo(itemNo);
 	}
@@ -115,17 +119,24 @@ public class ProductServiceImpl implements ProductService{
 	public void deleteListByItemNo(int itemNO) {
 		listRepository.deleteByItemNoAndExistIsNull(itemNO);
 	}
+	
+	@Override
+	public void deleteByItemNoAndProductName(int itemNo, String productName) {
+		listRepository.deleteByItemNoAndProductName(itemNo, productName);
+	}
+	
+	//User
+	@Override
+	public float findByUsernametoCart(String username) {
+		UserBean ubean = userPointRepository.findByUsername(username);
+		System.out.println("ubean:"+ubean);
+		return ubean.getBonusPoint();
+	}
 
-//	@Override
-//	public float findByUsernametoCart(String username) {
-//		Userbean ubean = userPointRepository.findByUsername(username);	
-//		return ubean.getBonusPoint();
-//	}
-//
-//	@Override
-//	public void updatePointByUsernametoCart(float point, String username) {
-//		userPointRepository.updatePointByUsername(point, username);
-//	}
+	@Override
+	public void updatePointByUsernametoCart(float point, String username) {
+		userPointRepository.updatePointByUsername(point, username);
+	}
 
 
 

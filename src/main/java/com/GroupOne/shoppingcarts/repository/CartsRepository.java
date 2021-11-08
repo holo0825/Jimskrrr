@@ -32,8 +32,8 @@ public interface CartsRepository extends JpaRepository<CartsBean, Integer>{
 	
 //	void updateByUsername(int amount, float points,Date payday , String username, int itemNo);
 	@Modifying
-	@Query(value = "update Cart set amount = ?1 , points = ?2 , payday = ?3 where username = ?4 and itemNo = ?5",nativeQuery = true)
-	void updateAmountAndPointsAndPaydayByUsernameAndItemNO(int amount, float points,Date payday , String username, int itemNo);
+	@Query(value = "update Cart set amount = ?1 , points = ?2 , payday = ?3 , discount = ?4 , disAmount = ?5 , transactionalNum =?6 where username = ?7 and itemNo = ?8",nativeQuery = true)
+	void updateAmountAndPointsAndPaydayByUsernameAndItemNo(int amount, float points,Date payday, int dicount, int disAmount, String transactionalNum, String username, int itemNo);
 	
 //	boolean deleteCartByitemNo(CartsBean cartsBean);
 //	void deleteById(int itemNo);

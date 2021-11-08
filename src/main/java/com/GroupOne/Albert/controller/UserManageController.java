@@ -168,7 +168,7 @@ public class UserManageController {
 	}
 	
 	// 專門處理Ajax更新功能
-	@ResponseBody
+//	@ResponseBody
 	@PutMapping("/ajaxupdateuser")
 	public String ajaxUpdateUser(@RequestParam int id,
 								@RequestParam String username,

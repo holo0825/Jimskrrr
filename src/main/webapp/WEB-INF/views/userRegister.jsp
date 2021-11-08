@@ -26,15 +26,15 @@
             <!--語意標籤<em>會讓文字便鞋體，但不同於font-family屬性的效果-->
             <div class="st1">
                 <label for="username1" class="t1"><span id="must">*</span>帳號：</label><input type="text" id="username1"
-                    name="username" autofocus required autocomplete="off" size=20>
+                    name="username" autofocus required="required" autocomplete="off" size=20>
             </div>
             <div class="st1">
                 <label for="password1" class="t1"><span id="must">*</span>密碼：</label><input type="password"
-                    id="password1" name="password" required maxlength="20" autocomplete="off">
+                    id="password1" name="password" required="required" maxlength="20" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="fullname1" class="t1"><span id="must">*</span>姓名：</label><input type="text" id="fullname1"
-                    name="fullname" placeholder="李小龍" autocomplete="off" size=10>
+                    name="fullname" placeholder="李小龍" autocomplete="off" size=10 maxlength="10" required="required">
             </div>
             <div class="st1">
                 <label for="" class="t1"><span id="must">*</span>性別：</label>
@@ -46,15 +46,15 @@
             </div>
             <div class="st1">
                 <label for="" class="t1"><span id="must">*</span>生日：</label>
-                <input type="date" id="datefield" name="dob" min="1900-01-01" max="2050-12-31" maxlength="10" required autocomplete="off">
+                <input type="date" id="datefield" name="dob" min="1900-01-01" max="2050-12-31" maxlength="10" required="required" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="" class="t1"><span id="must">*</span>Email：</label>
-                <input type="email" name="email" required maxlength="20" autocomplete="off">
+                <input type="email" name="email" required="required" maxlength="50" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="phoneNumber1" class="t1"><span id="must">*</span>手機號碼：</label><input type="text"
-                    id="phoneNumber1" name="phoneNumber" placeholder="0988888888" required maxlength="10"
+                    id="phoneNumber1" name="phoneNumber" placeholder="0988888888" required="required" maxlength="10"
                     autocomplete="off" size=10>
             </div>
             <div class="st1">

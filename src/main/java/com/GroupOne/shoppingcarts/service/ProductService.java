@@ -21,8 +21,7 @@ public interface ProductService {
 
 	void saveCart(CartsBean cartsBean);
 
-	void updateAmountAndPointsAndPaydayByUsernameAndItemNO(int amount, float points, Date payday, String username,
-			int itemNo);
+	void updateAmountAndPointsAndPaydayByUsernameAndItemNo(int amount, float points,Date payday, int dicount, int disAmount, String transactionalNum, String username, int itemNo);
 
 	void deleteCartByItemNo(int itemNo);
 
@@ -39,11 +38,13 @@ public interface ProductService {
 
 	void updateNumberAndExistByItemNoAndProductName(int number, String exist, int itemNo, String productNmae);
 
-	void deleteListByItemNo(int itemNO);
+	void deleteListByItemNo(int itemNo);
+	
+	void deleteByItemNoAndProductName(int itemNo, String productName);
 
 	// User point
-//	float findByUsernametoCart(String username);
-//
-//	void updatePointByUsernametoCart(float point, String username);
+	float findByUsernametoCart(String username);
+
+	void updatePointByUsernametoCart(float point, String username);
 
 }

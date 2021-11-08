@@ -29,7 +29,7 @@ public class SellerRegisterServiceImpl implements SellerRegisterService {
 	@Override
 	public String registerSeller(SellerBean sellerBean) {
 		if (sellerBean != null) {
-			SellerBean sellerRecord = sellerRegisterDao.findById(sellerBean.getId()).get();
+			SellerBean sellerRecord = sellerRegisterDao.findByUsername(sellerBean.getUsername());
 			if (sellerRecord == null) {
 				sellerRegisterDao.save(sellerBean);
 				return "賣家用戶註冊成功！";

@@ -26,15 +26,15 @@
             <!--語意標籤<em>會讓文字便鞋體，但不同於font-family屬性的效果-->
             <div class="st1">
                 <label for="username1" class="t1"><span id="must">*</span>帳號：</label><input type="text" id="username1"
-                    name="username" autofocus required autocomplete="off" size=20>
+                    name="username" autofocus required="required" autocomplete="off" size=20>
             </div>
             <div class="st1">
                 <label for="password1" class="t1"><span id="must">*</span>密碼：</label><input type="password"
-                    id="password1" name="password" required maxlength="20" autocomplete="off">
+                    id="password1" name="password" required="required" maxlength="20" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="fullname1" class="t1"><span id="must">*</span>姓名：</label><input type="text" id="fullname1"
-                    name="fullname" placeholder="李小龍" autocomplete="off" size=10>
+                    name="fullname" placeholder="李小龍" autocomplete="off" size=10 required="required" maxlength="10">
             </div>
             <div class="st1">
                 <label for="" class="t1">性別：</label>
@@ -50,16 +50,16 @@
             </div>
             <div class="st1">
                 <label for="" class="t1"><span id="must">*</span>Email：</label>
-                <input type="email" name="email" required maxlength="20" autocomplete="off">
+                <input type="email" name="email" required="required" maxlength="50" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="phoneNumber1" class="t1"><span id="must">*</span>手機號碼：</label><input type="text"
-                    id="phoneNumber1" name="phoneNumber" placeholder="0988888888" required maxlength="10"
+                    id="phoneNumber1" name="phoneNumber" placeholder="0988888888" required="required" maxlength="10"
                     autocomplete="off" size=10>
             </div>
             <div class="st1">
                 <label for="telephoneNumber1" class="t1"><span id="must">*</span>公司電話：</label><input type="text"
-                    id="telephoneNumber1" name="telephoneNumber" placeholder="0288888888" required maxlength="10"
+                    id="telephoneNumber1" name="telephoneNumber" placeholder="0288888888" required="required" maxlength="10"
                     autocomplete="off" size=10>
             </div>
             <div class="st1">
@@ -68,12 +68,12 @@
             </div>
             <div class="st1">
                 <label for="companyName1" class="t1"><span id="must">*</span>公司名稱：</label><input type="text"
-                    id="companyName1" name="companyName" placeholder="聚點時刻股份有限公司" required maxlength="20" autocomplete="off"
+                    id="companyName1" name="companyName" placeholder="聚點時刻股份有限公司" required="required" maxlength="50" autocomplete="off"
                     size=20>
             </div>
             <div class="st1">
                 <label for="companyAddress1" class="t1"><span id="must">*</span>公司地址：</label><input type="text"
-                    id="companyAddress1" name="companyAddress" placeholder="XX市XX區XX路XX號XX樓" required maxlength="20"
+                    id="companyAddress1" name="companyAddress" placeholder="XX市XX區XX路XX號XX樓" required="required" maxlength="100"
                     autocomplete="off" size=30>
             </div>
             <!-- <div class="st1">

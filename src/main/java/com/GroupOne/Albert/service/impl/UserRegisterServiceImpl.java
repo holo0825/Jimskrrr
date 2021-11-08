@@ -31,7 +31,7 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 	@Override
 	public String registerUser(UserBean userBean) {
 		if (userBean != null) {
-			UserBean userRecord = userRegisterDao.findById(userBean.getId()).get();
+			UserBean userRecord = userRegisterDao.findByUsername(userBean.getUsername());
 			if (userRecord == null) {
 				userRegisterDao.save(userBean);
 				return "買家用戶註冊成功！";

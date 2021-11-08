@@ -12,4 +12,5 @@ public interface SellerRegisterDao extends JpaRepository<SellerBean, Integer>{
 
 //	String registerSeller(SellerBean sellerBean);
 
+	SellerBean findByUsername(String username);
 }

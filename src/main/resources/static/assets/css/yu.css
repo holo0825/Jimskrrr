@@ -1,0 +1,39 @@
+fieldset {
+    width: 800px;
+    margin: auto;
+    border: 5px;
+    border-radius: 20px;  
+    background-color:#F2E6E6;
+}
+legend {
+    color:#336666;
+    margin:20px;
+    /* padding-top: 10px; */
+    font-size: 180%;
+    text-align: center;      
+}
+table{
+	width: 800px;
+    margin: auto;
+    float: auto;
+}
+.st1 {
+     width:750px;
+     border-bottom: 3px dashed #D8D8EB;
+     margin:20px;
+     padding-bottom:10px;
+}
+.ps {
+    color: gray;
+    font-size: smaller;
+}
+.t1 {
+    width:100px;
+    float:left;
+ }
+ .sub {
+    width:750px;
+    padding-top: 20px;
+    margin:auto;
+    text-align:center;
+}

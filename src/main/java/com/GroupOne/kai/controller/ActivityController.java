@@ -28,7 +28,7 @@ public class ActivityController {
 	ActivityService activityService;
 	RecordParticipantService recordParticipantService;
 	//mail
-	@Autowired
+	//@Autowired
 	JavaMailSender mailSender;
 	@Autowired
 	public ActivityController(ActivityService activityService,RecordParticipantService recordParticipantService) {
@@ -42,10 +42,10 @@ public class ActivityController {
 		System.out.println("-------------ActivityPage-----活動卡V-----");
 		model.addAttribute("activityListPage", activityList);
 		model.addAttribute("activityPage", new ActivityBean());
-		return "ActivityPage";
+		return "Activity_28/ActivityPage";
 	}
 	
-	//[前端]活動卡內容V
+	//[前端]活動卡內容ActivityPagedetail V
 	@GetMapping("/activitypage")
 	public String gotoactivitydetail( @RequestParam("id")Integer id,Model model) {
 		ActivityBean activityBean=new ActivityBean();
@@ -55,7 +55,7 @@ public class ActivityController {
 		System.out.println("-------------activitypage--------活動卡內容V--"+activityBean.getTopic());
 		model.addAttribute("RecordParticipant",new RecordParticipantBean());
 		System.out.println("-----------已加入空RecordParticipant進入session------");
-		return "ActivityPagedetail";
+		return "Activity_28/ActivityPagedetail";
 	}
 	
 	
@@ -93,17 +93,17 @@ public class ActivityController {
 			if (quota>0) {
 				recordParticipantService.updatequota(id,quota);
 			}else {
-				return "error";
+				return "Activity_28/ActivitySignUpError";
 			}
 			
-			
-			SimpleMailMessage message =new SimpleMailMessage();
-			  message.setTo("holo860825@gmail.com");
-			  message.setSubject("聚點食刻-活動");
-			  message.setText("您在聚點食刻活動報名完成");
-			  
-			  mailSender.send(message);
-			return "insertsuccess";
+			//寄信
+//			SimpleMailMessage message =new SimpleMailMessage();
+//			  message.setTo("holo860825@gmail.com");
+//			  message.setSubject("聚點食刻-活動");
+//			  message.setText("您在聚點食刻活動報名完成");
+//			  
+//			  mailSender.send(message);
+			return "Activity_28/ActivitySignUpSuccess";
 		}
 	
 	//一開始畫面V
@@ -114,10 +114,10 @@ public class ActivityController {
 		model.addAttribute("activityListPage", activityList);
 		model.addAttribute("activityPage", new ActivityBean());
 
-		return "ActivityPage";
+		return "Activity_28/ActivityPage";
 	}
 	
-	//[後端]顯示所有資料V
+	//[後端]顯示所有資料V(舊版沒有再用)
 	@RequestMapping("/ActivityRegister")
 	public String list(Model model) {
 		List<ActivityBean> activityList = activityService.selectAllUsers();
@@ -125,10 +125,10 @@ public class ActivityController {
 		model.addAttribute("activityList", activityList);
 		model.addAttribute("activity", new ActivityBean());
 		
-		return "ActivityRegister";
+		return "Activity_28/ActivityRegister";
 	}
 	
-	//[後端]查詢主題關鍵字V
+	//[後端]查詢主題關鍵字V(舊版沒有再用)
 		@GetMapping("/activityQuery")
 		public String activityQuery(@RequestParam String search, Model model) {
 			System.out.println("-------------activityQuery----------");
@@ -136,7 +136,7 @@ public class ActivityController {
 			model.addAttribute("activityList", activityList);
 			model.addAttribute("activity", new ActivityBean());
 			
-			return "ActivityRegister";
+			return "Activity_28/ActivityRegister";
 		}
 		
 	//[後端]新增V
@@ -144,18 +144,10 @@ public class ActivityController {
 	public String activityInsert(@ModelAttribute("activity") ActivityBean activity, @RequestParam MultipartFile image) {
 		
 		activityService.insertActivity(activity, image);
-		return "ActivityInsertSuccess";
+		return "Activity_28/ActivityInsertSuccess";
 
 	}
-	//修改完V
-	@PostMapping("/activityUpdate")
-	public String activityUpdate(@ModelAttribute("activity") ActivityBean activity, @RequestParam MultipartFile image) {
-		activityService.editActivity(activity, image);
-		
-		return "redirect:/ActivityRegister";
-
-	}
-
+	
 	//[後端]修改 get到edit紐進修改頁V
 	@GetMapping("/activityEdit")
 	public String edit(@ModelAttribute("activity") ActivityBean activityBean,
@@ -170,8 +162,18 @@ public class ActivityController {
 		activity.setStyles(activity.getStyle().split(","));
 		model.addAttribute("activity", activity);
 		
-		return "Edit";
+		return "Activity_28/Edit";
 	}
+	
+	//修改完V
+		@PostMapping("/activityUpdate")
+		public String activityUpdate(@ModelAttribute("activity") ActivityBean activity, @RequestParam MultipartFile image) {
+			activityService.editActivity(activity, image);
+			
+			return "redirect:Activity_28/ActivityRegister";
+
+	}
+		
 	//[後端]刪除 get delete紐進到刪除確認頁V
 	@GetMapping("/activityDelete")
 	public String toDelete(@RequestParam Integer id, Model model) {
@@ -180,7 +182,7 @@ public class ActivityController {
 			activity.setStyles(activity.getStyle().split(","));
 		model.addAttribute("activity", activity);
 		
-		return "DeleteConfirm";
+		return "Activity_28/DeleteConfirm";
 	}
 
 	//[後端]確認刪除ID後V
@@ -188,10 +190,23 @@ public class ActivityController {
 	public String delete(@RequestParam Integer id) {
 		activityService.deleteActivity(id);
 		
-		return "redirect:/ActivityRegister";
+		return "redirect:Activity_28/ActivityRegister";
 	}
 	
 	
-
+	//[後台]1
+	@GetMapping("/test")
+	public String test( Model model) {
+	
+				
+		return "/Test";
+	}
+	//[首頁]2
+	@GetMapping("/GroupOneHome")
+	public String home( Model model) {
+	
+				
+		return "GroupOneHome";
+	}
 
 }

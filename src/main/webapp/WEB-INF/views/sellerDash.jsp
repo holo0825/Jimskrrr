@@ -23,17 +23,17 @@ pageEncoding="UTF-8"%>
     </div>
     
     <!-- 
-    < %
+    <%
 	if(session.getAttribute("seller") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出賣家登入');");
+	    out.println("alert('權限不足，請先登入');");
 // 	    out.println("window.location.href='index.jsp';");
 	    out.println("window.location.href='./index';");
 	    out.println("</script>");
 	}
 	if(session.getAttribute("seller") != null) {
 	    out.println("<script>");
-	    out.println("alert('您已經登入');");
+	    out.println("alert('歡迎回到管理員平台');");
 	    //out.println("window.location.href='sellerCenter.jsp';");
 	    out.println("</script>");
 	}

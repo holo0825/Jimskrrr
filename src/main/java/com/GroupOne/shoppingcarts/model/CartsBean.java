@@ -1,6 +1,7 @@
 package com.GroupOne.shoppingcarts.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 
 @Entity
 @Table(name = "cart")
@@ -27,11 +30,44 @@ public class CartsBean implements Serializable{
 	
 	@Column(name = "SHOPPINGTYPE")
 	private String type;
+	private Integer discount;
+	private Integer disAmount;
+	private String transactionalNum;
+	
+	@Transient
+	private String stringDate;
 	
 	public CartsBean() {
 		super();
 	}
 	
+	public CartsBean(int itemNo, String username, Integer amount, Date payday, Float points, String wrong, String type,
+			Integer discount, Integer disAmount, String transactionalNum) {
+		super();
+		this.itemNo = itemNo;
+		this.username = username;
+		this.amount = amount;
+		this.payday = payday;
+		this.points = points;
+		this.wrong = wrong;
+		this.type = type;
+		this.discount = discount;
+		this.disAmount = disAmount;
+		this.transactionalNum = transactionalNum;
+	}
+	
+	public CartsBean(int amount,float points,String username,int itemNo,int discount,int disAmount,String transactionalNum) {
+		super();
+		this.itemNo = itemNo;
+		this.username = username;
+		this.amount = amount;
+		this.points = points;
+		this.discount = discount;
+		this.disAmount = disAmount;
+		this.transactionalNum = transactionalNum;
+	}
+	
+
 	public CartsBean(int itemNo, String username, int amount, Date payday, float points, String wrong, String type) {
 		super();
 		this.itemNo = itemNo;
@@ -118,5 +154,38 @@ public class CartsBean implements Serializable{
 		this.type = type;
 	}
 	
+	public Integer getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(Integer discount) {
+		this.discount = discount;
+	}
+
+	public Integer getDisAmount() {
+		return disAmount;
+	}
+
+	public void setDisAmount(Integer disAmount) {
+		this.disAmount = disAmount;
+	}
+
+	public String getTransactionalNum() {
+		return transactionalNum;
+	}
+
+	public void setTransactionalNum(String transactionalNum) {
+		this.transactionalNum = transactionalNum;
+	}
+
+	public String getStringDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		stringDate = sdf.format(payday);
+		return stringDate;
+	}
+
+	public void setStringDate(String stringDate) {
+		this.stringDate = stringDate;
+	}
 	
 }

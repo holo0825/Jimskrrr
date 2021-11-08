@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.GroupOne.Albert.model.AdminBean;
 import com.GroupOne.Albert.model.UserBean;
 import com.GroupOne.Albert.service.UserLoginLogoutService;
 
 @Controller
-//@SessionAttributes("user")
+@SessionAttributes("user")
 public class UserLoginController{
 
 		UserLoginLogoutService ullService;
@@ -34,33 +35,37 @@ public class UserLoginController{
 			this.servletContext = servletContext;
 		}
 		
-		// 進入登入頁面前的Controller方法，預備@ModelAttribute的seller屬性物件
+		// 進入登入頁面前的Controller方法，檢查session是否登入狀態，或預備@ModelAttribute的userLoginBean屬性物件
 		@GetMapping("/UserTryLogin")
 		public String getAddNewProductForm(Model model) {
-//		public String getAddNewProductForm(@ModelAttribute("user") UserBean existingUser, Model model) {
-//			if (existingUser != null) {
-//				return "index";
-//			}else {
-				UserBean user = new UserBean();
-//			UserBean user = null; // 千萬不可以設定為null，下一頁的modelAttribute必須接受一個名為seller的物件
-				model.addAttribute("user", user);
-				return "userLogin";
-				// userLogin.jsp 為賣家用戶登入頁面
-//			}
+//		public String getAddNewProductForm(Model model, HttpServletRequest request) {
+			
+//			UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+			UserBean existingUser = (UserBean)model.getAttribute("user");
+
+			if (existingUser != null) {
+				return "userDash";
+			}
+			UserBean userLoginBean = new UserBean();
+//			UserBean userLoginBean = null; // 千萬不可以設定為null，下一頁的modelAttribute必須接受一個名為userLoginBean的物件
+			model.addAttribute("userLoginBean", userLoginBean);
+			// userLogin.jsp 為賣家用戶登入頁面
+			return "userLogin";
 		}
 				
-//		@ModelAttribute("user")
+//		@ModelAttribute("userLoginBean")
 //		 public UserBean getUserBean() {
 //		  return new UserBean();
 //		 }		
 				
 		@GetMapping("/Userlogin")
-		public String checkLogin(@RequestParam String username,
-								 @RequestParam String password,
-								 @RequestParam String email,
+		public String checkLogin(
+//								 @RequestParam(required = false) String username,
+//								 @RequestParam(required = false) String password,
+//								 @RequestParam(required = false) String email,
 								 Model model,
 								 RedirectAttributes redirectAttributes,
-								 @ModelAttribute("user") UserBean uBean,
+								 @ModelAttribute("userLoginBean") UserBean userLoginBean,
 								 BindingResult bindingResult,
 								 HttpServletRequest request) {
 			
@@ -72,42 +77,61 @@ public class UserLoginController{
 //		SessionFactory factory = HibernateUtil.getSessionFactory();
 //		Session factorySession = factory.getCurrentSession();
 //		UserDAO userDao = new UserDAO(factorySession);
+			// 先判斷買家是否已經登入，如果已經登入就導回到買家平台首頁
+//			HttpSession session = request.getSession();
+//			UserBean existingUser = (UserBean)session.getAttribute("user");
+			UserBean existingUser = (UserBean)model.getAttribute("user");
+			if (existingUser != null) {
+				return "forward:/UserHome";
+			}
 
 			UserBean user;
 //			String destPage = "userLogin.jsp";
-			String destPage = "userLogin";
+			String destPage = "UserTryLogin";
 
-			if (uBean!=null) {
+			if (userLoginBean!=null) {
 //			UserBean user = userDao.checkLogin(username, password, email);
 //				user = ullService.checkLogin(username, password, email);
 //				user = ullService.checkLogin(uBean.getUsername(), uBean.getPassword(), uBean.getEmail());
-				user = ullService.findByUsernameAndPasswordAndEmail(uBean.getUsername(), uBean.getPassword(), uBean.getEmail());
+				user = ullService.findByUsernameAndPasswordAndEmail(
+						userLoginBean.getUsername(), userLoginBean.getPassword(), userLoginBean.getEmail());
 				
 			
-			if (user != null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("user", user);
-//			destPage = "userDash.jsp";
-				
-				model.addAttribute(user);
-//				redirectAttributes.addAttribute("user" ,user);
-				destPage = "userDash";
-				
-				return "userDash";
-			} else {
-				String message = "帳號密碼輸入錯誤或不存在此帳號";
-//			request.setAttribute("message", message);
-				user = new UserBean();
-				model.addAttribute("user", user);
-				model.addAttribute("message", message);
-			}
+				if (user != null) {
+//				session = request.getSession();
+//				session.setAttribute("user", user);
+//				destPage = "userDash.jsp";
+					model.addAttribute("user", user);
+					return "forward:/UserHome";
+				} else {
+					String message = "帳號密碼輸入錯誤或不存在此帳號";
+//				request.setAttribute("message", message);
+					user = new UserBean();
+					model.addAttribute("user", user);
+//					redirectAttributes.addAttribute("user" ,user);
+					model.addAttribute("message", message);
+				}
 			}
 			
 //			RequestDispatcher dispatcher = request.getRequestDispatcher(destPage);
 //			dispatcher.forward(request, response);
-//			return "redirect:/" + destPage;
-			return destPage;
-			
+			return "forward:/" + destPage;
+//			return destPage;
+		}
+
+		
+		@GetMapping("/UserHome")
+		public String userHome(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+//			UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+			UserBean existingUser = (UserBean)model.getAttribute("user");
+			if (existingUser != null) {
+				return "userDash";
+			}else {
+				String message = "尚未登入或權限不足";
+				redirectAttributes.addFlashAttribute("message", message);
+//				model.addAttribute("message", message);
+				return "redirect:/UserTryLogin";
+			}
 		}
 
 }

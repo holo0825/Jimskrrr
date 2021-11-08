@@ -34,4 +34,6 @@ public interface ListRepository extends JpaRepository<ListBean, Integer> {
 	
 //	boolean deleteListByItemNo(ListBean listBean);
 	void deleteByItemNoAndExistIsNull(int itemNO);
+	
+	void deleteByItemNoAndProductName(int itemNo, String productName);
 }

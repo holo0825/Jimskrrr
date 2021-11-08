@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -18,7 +19,9 @@ public class TestController {
 //	return "redirect:/redirectAnother"; // 傳向新請求,model內無法存取
 
 	@GetMapping({ "/testUser" })
-	public String TestUser(Model model) {
+
+	public String testUser(Model model) {
+
 		String t1 = (String) model.getAttribute("admin");
 		String t2 = (String) model.getAttribute("user");
 		if(t1 != null || t2 != null) {
@@ -29,7 +32,7 @@ public class TestController {
 	}
 	
 	@GetMapping("/testLoginAdmin")
-	public String LoginAdmin(Model model,
+	public String loginAdmin(Model model,
 			@RequestParam(name = "username", required = false) String username) {
 		model.addAttribute("admin",username);
 		
@@ -37,7 +40,7 @@ public class TestController {
 	}
 	
 	@GetMapping("/testLoginUser")
-	public String LoginUser(Model model,
+	public String loginUser(Model model,
 			@RequestParam(name = "username", required = false) String username) {
 		
 		model.addAttribute("user",username);
@@ -46,16 +49,20 @@ public class TestController {
 	}
 	
 	@GetMapping("/testRemove")
-	public String TestRemove(Model model,SessionStatus status) {
+	public String testRemove(Model model,SessionStatus status) {
 		
 		status.setComplete();
 		System.out.println("Remove admin and user");
 		return "redirect:/testProduct";
 	}
 	
+//	@ModelAttribute
+	
+
 	
 	@GetMapping({"/testProduct"})
-	public String TestProduct(Model model,HttpServletRequest request) {
+	public String testProduct(Model model,HttpServletRequest request) {
+
 
 		String admin =  (String) model.getAttribute("admin");
 		String user = (String) model.getAttribute("user");

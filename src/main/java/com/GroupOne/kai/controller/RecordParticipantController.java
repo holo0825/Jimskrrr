@@ -38,17 +38,17 @@ public class RecordParticipantController {
 			model.addAttribute("recordParticipantList", recordParticipantList);
 
 			
-			return "RecordParticipantBack";
+			return "Activity_28/RecordParticipantBack";
 		}
 	
-	//[前端]Post帶資料新增 抓ID問題要處里
+	//[前端]Post帶資料新增 (抓ID問題要處里)
 	@PostMapping("/GroupOne_Activity/activitypage")
 	public String RecordParticipantInsert(@ModelAttribute("RecordParticipant") RecordParticipantBean recordParticipant) {
 			RecordParticipantBean recordParticipantBean = new RecordParticipantBean();
 			ActivityBean activityBean = new ActivityBean();
 			System.out.println("******************"+recordParticipant.getRecordId());
 
-			return "redirect:/RecordParticipantBack";
+			return "redirect:Activity_28/RecordParticipantBack";
 
 		}
 		
@@ -58,10 +58,10 @@ public class RecordParticipantController {
 			@ModelAttribute("RecordParticipant") RecordParticipantBean recordParticipant 
 				,@PathVariable Integer id,Model model) {
 						
-		System.out.println("+++POST++立即澳名按下++++++>"+recordParticipant.getActivity_topic());
+		System.out.println("+++POST++立即報名按下++++++>"+recordParticipant.getActivity_topic());
 		model.addAttribute("RecordParticipant",recordParticipant);
 
-		return "redirect:/activitypage?id={id}";
+		return "redirect:Activity_28/activitypage?id={id}";
 		
 		}
 	//[後端]確認刪除ID後V
@@ -69,7 +69,7 @@ public class RecordParticipantController {
 		public String delete(@RequestParam Integer id) {
 			recordParticipantService.deleteRecordParticipant(id);
 			
-			return "redirect:/RecordParticipantBack";
+			return "redirect:Activity_28/RecordParticipantBack";
 		}
 	
 	

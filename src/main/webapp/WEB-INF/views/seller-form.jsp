@@ -15,11 +15,11 @@
 </head>
 <body>
 
-	<!-- 
-	< %
+	
+	<%
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出管理員登入');");
+	    out.println("alert('權限不足，請先登入');");
 // 	    out.println("window.location.href='index.jsp';");
 	    out.println("window.location.href='../index';");
 	    out.println("</script>");
@@ -31,7 +31,7 @@
 	    out.println("</script>");
 	}*/
 	%>
-	 --> 
+	
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
 		<nav class="navbar navbar-expand-md navbar-dark"
@@ -85,13 +85,13 @@
 				<c:if test="${seller != null}">
 <!-- 					<form action=".\SellerAll?action=updateseller" method="post" > -->
 <!-- 					<form action="..\..\SellerAll\updateseller" method="get" > -->
-					<form action="..\..\SellerAll\ajaxupdateseller" method="post" >
+					<form action="..\..\SellerAll\ajaxupdateseller" method="post" onsubmit="return confirm('請確認是否變更賣家用戶資料');">
 					<input type="hidden" name="_method" value="put" />					
 				</c:if>
 				<c:if test="${seller == null}">
 <!-- 					<form action=".\SellerAll?action=insertseller" method="post" > -->
 <!-- 					<form action="..\SellerAll\insertseller" method="get" > -->
-					<form action="..\SellerAll\ajaxinsertseller" method="post" >
+					<form action="..\SellerAll\ajaxinsertseller" method="post" onsubmit="return confirm('請確認是否新增賣家用戶資料');">
 				</c:if>
 
 				<!-- c:if tag判斷seller是否存在，決定顯示選項為edit或add -->

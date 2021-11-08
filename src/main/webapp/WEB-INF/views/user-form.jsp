@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- JSP基本設定 -->
 <!-- 引用JSP c tag -->
 <html>
@@ -13,11 +14,11 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<!--  
-	< %
+	
+	<%
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出管理員登入');");
+	    out.println("alert('權限不足，請先登入');");
 // 	    out.println("window.location.href='index.jsp';");
 	    out.println("window.location.href='../index';");
 	    out.println("</script>");
@@ -29,7 +30,7 @@
 	    out.println("</script>");
 	}*/
 	%>
-	 -->
+	 
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
 		<nav class="navbar navbar-expand-md navbar-dark"
@@ -83,13 +84,13 @@
 				<c:if test="${user != null}">
 <!-- 					<form action=".\UserAll?action=updateuser" method="post"> -->
 <!-- 					<form action="..\..\UserAll\updateuser" method="get"> -->
-					<form action="..\..\UserAll\ajaxupdateuser" method="post">
+					<form action="..\..\UserAll\ajaxupdateuser" method="post" onsubmit="return confirm('請確認是否變更買家用戶資料');">
 					<input type="hidden" name="_method" value="put" />
 				</c:if>
 				<c:if test="${user == null}">
 <!-- 					<form action=".\UserAll?action=insertuser" method="post"> -->
 <!-- 					<form action="..\UserAll\insertuser" method="get"> -->
-					<form action="..\UserAll\ajaxinsertuser" method="post">
+					<form action="..\UserAll\ajaxinsertuser" method="post" onsubmit="return confirm('請確認是否新增買家用戶資料');">
 				</c:if>
 
 				<!-- c tag判斷user是否存在，決定顯示選項為edit或add -->
@@ -117,7 +118,7 @@
 				<fieldset class="form-group">
 					<label>password</label> <input type="password"
 						value="<c:out value='${user.password}' />" class="form-control"
-						name="password" maxlength="20" required autocomplete="off">
+						name="password" maxlength="20" required="required" autocomplete="off">
 				</fieldset>
 
 				<fieldset class="form-group">

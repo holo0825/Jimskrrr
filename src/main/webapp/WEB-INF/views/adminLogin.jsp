@@ -9,6 +9,22 @@
 <%-- <link rel="stylesheet" href="<c:url value='/css/registerStyle.css'/>" type="text/css" /> --%>
 <link rel="stylesheet" href="./css/registerStyle.css" type="text/css" />
 </head>
+<%/*
+	if(session.getAttribute("admin") == null) {
+	    out.println("<script>");
+	    out.println("alert('權限不足，請先登入');");
+// 	    out.println("window.location.href='index.jsp';");
+	    out.println("window.location.href='../index';");
+	    out.println("</script>");
+	}*/
+	if(session.getAttribute("admin") != null) {
+	    out.println("<script>");
+	    out.println("alert('您已經登入');");
+	    //out.println("window.location.href='sellerCenter.jsp';");
+	    out.println("window.location.href='./AdminHome");
+	    out.println("</script>");
+	}
+	%>
 <body>
 	<h1>聚點時刻 管理員登入</h1>
 	<hr>
@@ -18,9 +34,9 @@
 	<div style="text-align: center">
 		<h1>管理員登入</h1>
 		
-<%--       <form:form method = "POST" action=".\Adminlogin" modelAttribute="admin"> --%>
+<%--       <form:form method = "POST" action=".\Adminlogin" modelAttribute="adminLoginBean"> --%>
       <!-- 
-      <form:form method="GET" action=".\Adminlogin" modelAttribute="admin">
+      <form:form method="GET" action=".\Adminlogin" modelAttribute="adminLoginBean">
          <table>
             <tr>
                <td><form:label path = "username">Username</form:label></td>
@@ -43,7 +59,7 @@
       </form:form>
        --%>
 		<!-- Spring新版form:form表單 -->
-		<form:form id="loginForm" method="GET" action=".\Adminlogin" modelAttribute="admin">
+		<form:form id="loginForm" method="GET" action=".\Adminlogin" modelAttribute="adminLoginBean">
 			<form:label path="email"><span id="must">*</span>Email:</form:label> <form:input id="email1" path="email" type="email" size="30" autofocus="autofocus" required="required"/> <br>
 			<br> <form:label path="username"><span id="must">*</span>帳號:</form:label> <form:input
 				id="username1" path="username" size="30" required="required"/> <br>           

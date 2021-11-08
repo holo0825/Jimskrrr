@@ -15,23 +15,23 @@ pageEncoding="UTF-8"%>
 	crossorigin="anonymous">
 </head>
 <body>
-	<!-- 
-	< %
+	
+	<%
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出管理員登入');");
-	    out.println("window.location.href='index.jsp';");
+	    out.println("alert('權限不足，請先登入');");
+// 	    out.println("window.location.href='index.jsp';");
 	    out.println("window.location.href='./index';");
 	    out.println("</script>");
 	}
 	if(session.getAttribute("admin") != null) {
 	    out.println("<script>");
-	    out.println("alert('您已經登入');");
+	    out.println("alert('歡迎回到管理員平台');");
 	    //out.println("window.location.href='sellerCenter.jsp';");
 	    out.println("</script>");
 	}
 	%>
-	 -->
+	
 	
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
@@ -66,7 +66,7 @@ pageEncoding="UTF-8"%>
     <div style="text-align: center">
         <h1>歡迎回到管理員平台</h1>
         <b>${admin.fullname} | ${admin.email}</b>
-        <br><br>
+        <br><br><div>${pageContext.request.userPrincipal.name}</div>
         <br><br>
         <br><br>
         <div>

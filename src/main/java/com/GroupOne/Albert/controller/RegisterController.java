@@ -80,18 +80,19 @@ public class RegisterController {
 							   @RequestParam String email,
 							   @RequestParam String phoneNumber,
 							   @RequestParam String homeNumber,
-							   @RequestParam(value="bonusPoint", required = false) float bonusPoint,
+							   @RequestParam(value="bonusPoint", required = false) Float bonusPoint,
 							   Model model) {
-		bonusPoint = 0;
+		bonusPoint = (float) 0;
 		UserBean userBean = new UserBean(username,password,fullname,dob,gender,email,phoneNumber,homeNumber,bonusPoint);
 //		registerStatus = registerDao.registerUser(userBean);
 //		registerStatus = rService.registerUser(userBean);
 		registerStatus = userRegisterService.registerUser(userBean);
-		System.out.println(registerStatus);
 		String destPage = "";
 		if (registerStatus.equals("買家用戶註冊成功！")) {
-			destPage = "userLogin";
+			System.out.println(registerStatus);
+			destPage = "redirect:/UserTryLogin";
 		} else if (registerStatus.equals("買家用戶註冊失敗，請再次確認")) {
+			System.out.println(registerStatus);
 			destPage = "userRegister";
 		}
 		return destPage;
@@ -101,19 +102,19 @@ public class RegisterController {
 	public String registerSeller(@RequestParam String username,
 								 @RequestParam String password,
 								 @RequestParam String fullname,
-								 @RequestParam String dob,
-								 @RequestParam String gender,
+								 @RequestParam(required=false) String dob,
+								 @RequestParam(required=false) String gender,
 								 @RequestParam String email,
 								 @RequestParam String phoneNumber,
 								 @RequestParam String telephoneNumber,
-								 @RequestParam String extensionNumber,
+								 @RequestParam(required=false) String extensionNumber,
 								 @RequestParam String companyName,
 								 @RequestParam String companyAddress,
 								 @RequestParam(value = "businessCert", required = false) Byte[] businessCert,
-								 @RequestParam(value="verifyStatus", required = false) Boolean verifyStatus,
+//								 @RequestParam(value="verifyStatus", required = false) Boolean verifyStatus,
 								 Model model) {
 		businessCert = null;
-		verifyStatus = false;
+		Boolean verifyStatus = false;
 		SellerBean sellerBean = new SellerBean(username,password,fullname,
 											   dob,gender,email,phoneNumber,
 											   telephoneNumber,extensionNumber,companyName,
@@ -121,11 +122,12 @@ public class RegisterController {
 //		registerStatus = registerDao.registerSeller(sellerBean);
 //		registerStatus = rDao.registerSeller(sellerBean);
 		registerStatus = sellerRegisterService.registerSeller(sellerBean);
-		System.out.println(registerStatus);
 		String destPage = "";
 		if (registerStatus.equals("賣家用戶註冊成功！")) {
-			destPage = "sellerLogin";
+			System.out.println(registerStatus);
+			destPage = "redirect:/SellerTryLogin";
 		} else if (registerStatus.equals("賣家用戶註冊失敗，請再次確認")) {
+			System.out.println(registerStatus);
 			destPage = "sellerRegister";
 		}
 		return destPage;

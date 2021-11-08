@@ -11,21 +11,21 @@
 <link rel="stylesheet" href="./css/registerStyle.css" type="text/css" />
 </head>
 <body>
-	<%
-	/*
-	if(session.getAttribute("loginState") == "1") {
+	<%/*
+	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
-	    out.println("alert('請退出管理員登入');");
-	    out.println("window.location.href='index.jsp';");
+	    out.println("alert('權限不足，請先登入');");
+// 	    out.println("window.location.href='index.jsp';");
+	    out.println("window.location.href='../index';");
 	    out.println("</script>");
-	}
-	if(session.getAttribute("loginState") == "0") {
+	}*/
+	if(session.getAttribute("seller") != null) {
 	    out.println("<script>");
 	    out.println("alert('您已經登入');");
-	    out.println("window.location.href='sellerCenter.jsp';");
+	    //out.println("window.location.href='sellerCenter.jsp';");
+	   	out.println("window.location.href='./SellerHome");
 	    out.println("</script>");
 	}
-	*/
 	%>
 	<h1>聚點時刻 賣家用戶登入</h1>
 	<hr>
@@ -34,9 +34,9 @@
 	<hr>
 	<div style="text-align: center">
 		<h1>賣家登入</h1>
-<%-- 		<form:form method="POST" action=".\Sellerlogin" modelAttribute="seller"> --%>
+<%-- 		<form:form method="POST" action=".\Sellerlogin" modelAttribute="sellerLoginBean"> --%>
 		<!-- 
-		<form:form method="GET" action=".\Sellerlogin" modelAttribute="seller">
+		<form:form method="GET" action=".\Sellerlogin" modelAttribute="sellerLoginBean">
          <table>
             <tr>
                <td><form:label path = "username">Username</form:label></td>
@@ -59,7 +59,7 @@
       </form:form>
        	-->
 		<!-- Spring新版form:form表單 -->
-		<form:form id="loginForm" method="GET" action=".\Sellerlogin" modelAttribute="seller">
+		<form:form id="loginForm" method="GET" action=".\Sellerlogin" modelAttribute="sellerLoginBean">
 			<form:label path="email"><span id="must">*</span>Email:</form:label> <form:input id="email1" path="email" size="30" autofocus="autofocus" required="required"/> <br>
 			<br> <form:label path="username"><span id="must">*</span>帳號:</form:label> <form:input
 				id="username1" path="username" size="30" required="required"/> <br>

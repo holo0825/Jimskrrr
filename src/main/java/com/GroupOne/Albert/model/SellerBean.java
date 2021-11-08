@@ -18,7 +18,7 @@ public class SellerBean implements Serializable {
 	
 	@Id @Column(name="ID")
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	protected int id;
+	protected Integer id;
 	
 	@Column(name="USERNAME")
 	protected String username;
