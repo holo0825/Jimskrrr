@@ -213,8 +213,17 @@
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 16px;}
 }
-    </style>
-    <script>
+/*color change*/
+    .licolor{
+        	
+       background-color:;
+     }
+    .licolor:hover{
+       
+       background-color:#6b51df;
+     }
+</style>
+<script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
@@ -274,7 +283,7 @@
 	  	
 	  </div>
 	  <ul class="list-unstyled components">
-                <li class="active">
+                <li class="active licolor">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         會員管理
@@ -286,7 +295,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li class="licolor">
                     <a href="#page1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         餐廳管理
@@ -298,7 +307,7 @@
                        
                     </ul>
                 </li>
-                <li>
+                <li class="licolor">
                     <a href="#page2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         團購管理
@@ -310,7 +319,7 @@
                         
                     </ul>
                 </li>
-                <li>
+                <li class="licolor">
                     <a href="#page3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         銷售管理
@@ -322,7 +331,7 @@
                         
                     </ul>
                 </li>
-                <li>
+                <li class="licolor">
                     <a href="#page4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         活動管理
@@ -337,7 +346,7 @@
                         
                     </ul>
                 </li>
-                <li>
+                <li class="licolor">
                     <a href="#page5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="icon icon-single-04"></i>
                         討論區管理
@@ -349,8 +358,8 @@
                        
                     </ul>
                 </li>
-                <li>
-                    <a href="#page5"  >
+                <li style="background-color:#1c0f54;">
+                    <a href="<c:url value='/GroupOneHome' />"  >
                         <i class="icon icon-single-04"></i>
                         返回首頁
                     </a>

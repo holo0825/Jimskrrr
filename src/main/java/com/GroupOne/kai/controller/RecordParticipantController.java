@@ -69,7 +69,7 @@ public class RecordParticipantController {
 		public String delete(@RequestParam Integer id) {
 			recordParticipantService.deleteRecordParticipant(id);
 			
-			return "redirect:Activity_28/RecordParticipantBack";
+			return "redirect:/RecordParticipantBack";
 		}
 	
 	

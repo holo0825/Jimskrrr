@@ -106,7 +106,7 @@ public class ActivityController {
 			return "Activity_28/ActivitySignUpSuccess";
 		}
 	
-	//一開始畫面V
+	//一開始活動頁V
 	@GetMapping("/ActivityPage")
 	public String index(Model model) {
 		System.out.println("-------------/----------");
@@ -129,14 +129,24 @@ public class ActivityController {
 	}
 	
 	//[後端]查詢主題關鍵字V(舊版沒有再用)
+//		@GetMapping("/activityQuery")
+//		public String activityQuery(@RequestParam String search, Model model) {
+//			System.out.println("-------------activityQuery----------");
+//			List<ActivityBean> activityList = activityService.selectSearchTopic(search);
+//			model.addAttribute("activityList", activityList);
+//			model.addAttribute("activity", new ActivityBean());
+//			
+//			return "Activity_28/ActivityRegister";
+//		}
+	//[前端]查詢主題關鍵字V
 		@GetMapping("/activityQuery")
 		public String activityQuery(@RequestParam String search, Model model) {
 			System.out.println("-------------activityQuery----------");
-			List<ActivityBean> activityList = activityService.selectSearchTopic(search);
-			model.addAttribute("activityList", activityList);
-			model.addAttribute("activity", new ActivityBean());
-			
-			return "Activity_28/ActivityRegister";
+			List<ActivityBean> activityListPage = activityService.selectSearchTopic(search);
+			model.addAttribute("activityListPage", activityListPage);
+			model.addAttribute("activityPage", new ActivityBean());
+					
+			return "Activity_28/ActivityPage";
 		}
 		
 	//[後端]新增V
@@ -170,7 +180,7 @@ public class ActivityController {
 		public String activityUpdate(@ModelAttribute("activity") ActivityBean activity, @RequestParam MultipartFile image) {
 			activityService.editActivity(activity, image);
 			
-			return "redirect:Activity_28/ActivityRegister";
+			return "redirect:/ActivityRegister";
 
 	}
 		
@@ -190,7 +200,7 @@ public class ActivityController {
 	public String delete(@RequestParam Integer id) {
 		activityService.deleteActivity(id);
 		
-		return "redirect:Activity_28/ActivityRegister";
+		return "redirect:/ActivityRegister";
 	}
 	
 	

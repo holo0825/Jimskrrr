@@ -568,8 +568,8 @@ body {
                        
                     </ul>
                 </li>
-                <li >
-                    <a href="#page5"  >
+                <li style="background-color:#1c0f54;">
+                    <a href="<c:url value='/GroupOneHome' />"  >
                         <i class="icon icon-single-04"></i>
                         返回首頁
                     </a>

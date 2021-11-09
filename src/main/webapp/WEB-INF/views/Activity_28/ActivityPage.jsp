@@ -363,8 +363,8 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
     <a class="nav-link text-decoration-none co" href="<c:url value='/ActivityRegister' />">後端</a>
     <a class="nav-link text-decoration-none co" href="<c:url value='/test' />">後端2</a>
     
-        <form class="form-inline my-2 my-lg-0 ml-auto">
-		      <input class="form-control mr-sm-2" type="search" placeholder="查詢主題關鍵字" aria-label="Search" style="height: 30px;">
+        <form class="form-inline my-2 my-lg-0 ml-auto" action="${pageContext.request.contextPath}/activityQuery">
+		      <input class="form-control mr-sm-2" type="search" name="search" placeholder="查詢主題關鍵字" aria-label="Search" style="height: 30px;">
 		      <button class="btn btn-outline-success my-2 my-sm-0 btn-sm" type="submit">查詢</button>
 		</form>
 <%--         <a class="text-decoration-none co" style="font-size:x-small; padding-left: 5px;padding-right: 5px;" font color="#FFFFFF" href="<c:url value='/UserTryLogin' />">登入</a> --%>
@@ -377,7 +377,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                 <a class="sign-popup-btn loingcolor" style="font-size:x-small; margin-right: 153px;"  href="#" title="Register" itemprop="url">賣家中心</a>
              </c:when>
              <c:otherwise>
-             	<span>${user.getUsername()}</span>&nbsp&nbsp&nbsp
+             	<span>${user.username}</span>&nbsp&nbsp&nbsp
              	<a class="sign-popup-btn loingcolor" href="#" title="Register" itemprop="url">登出</a>
              </c:otherwise>
         </c:choose>

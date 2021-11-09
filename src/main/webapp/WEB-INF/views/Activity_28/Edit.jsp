@@ -128,8 +128,8 @@ response.setDateHeader("Expires", -1); // Prevents caching at the proxy server
 						<form:input class="form-control" path="bonus_point" required="required"/>
 					</fieldset>
 					
-					<button type="submit" name="edit" class="btn btn-success">確認送出</button>
-					<button type="button" class="btn btn-success" value="返回" onclick="window.history.go(-1); return false;">返回</button>
+					<button type="submit" name="edit" class="btn btn-primary">確認送出</button>
+					<button type="button" class="btn btn-primary" value="返回" onclick="window.history.go(-1); return false;">返回</button>
 				</form:form>
 				
 			</div>
