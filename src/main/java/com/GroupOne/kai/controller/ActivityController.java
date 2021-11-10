@@ -15,18 +15,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.GroupOne.Albert.model.AdminBean;
+import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.service.UserRegisterService;
 import com.GroupOne.kai.model.ActivityBean;
 import com.GroupOne.kai.model.RecordParticipantBean;
 import com.GroupOne.kai.service.ActivityService;
 import com.GroupOne.kai.service.RecordParticipantService;
 
+@SessionAttributes({"admin", "user"})
 @Controller
 public class ActivityController {
 
 	ActivityService activityService;
 	RecordParticipantService recordParticipantService;
+	UserRegisterService userRegisterService;
+	
 	//mail
 	//@Autowired
 	JavaMailSender mailSender;
@@ -65,9 +73,12 @@ public class ActivityController {
 		public String processgotoactivitydetail(
 				@RequestParam("id")int id,
 				@ModelAttribute("RecordParticipant") RecordParticipantBean rpBean,
+				//使用SessionAttributes引入UserBean user
+				@ModelAttribute("user") UserBean usBean,
 				Model model) {
 			System.out.println("------------------立即報名送出-----------------------"+rpBean.getU_phone());
 			System.out.println("------------------立即報名送出---------------------id--"+id);
+			System.out.println("--------username----"+usBean.getUsername());
 			model.addAttribute("RecordParticipant",rpBean);
 			Optional<ActivityBean> ab ;
 			ab= activityService.selectOneUsers(id);
@@ -75,26 +86,29 @@ public class ActivityController {
 			String style = ab.get().getStyle();
 			RecordParticipantBean rb =new RecordParticipantBean();
 			rb.setS_username("asd123");
+			rb.setActivity_id(id);
 			rb.setActivity_topic(topic);
 			rb.setU_userid(rpBean.getU_userid());
 			rb.setU_username(rpBean.getU_username());
 			rb.setU_phone(rpBean.getU_phone());
 			rb.setSent_email(rpBean.getSent_email());
 			rb.setU_styles(style);
+			rb.setUser_username(usBean.getUsername());
 			rb.setCreate_date(new Date());
 			System.out.println("*************************************************");
 			System.out.println(topic+rpBean.getU_userid()+","+rpBean.getU_username()+","+rpBean.getU_phone()+","+rpBean.getSent_email()
 			+","+style+","+new Date());
-			recordParticipantService.insertRecordParticipant(rb);
-			model.addAttribute("ab",ab);
-			//更新人數，ab.get().getQuota()遠本人數
-			//quota原本人數減1，再去recordParticipantService塞入值
 			int quota =ab.get().getQuota()-1;
 			if (quota>0) {
 				recordParticipantService.updatequota(id,quota);
 			}else {
 				return "Activity_28/ActivitySignUpError";
 			}
+			recordParticipantService.insertRecordParticipant(rb);
+			model.addAttribute("ab",ab);
+			//更新人數，ab.get().getQuota()遠本人數
+			//quota原本人數減1，再去recordParticipantService塞入值
+			
 			
 			//寄信
 //			SimpleMailMessage message =new SimpleMailMessage();
@@ -108,12 +122,12 @@ public class ActivityController {
 	
 	//一開始活動頁V
 	@GetMapping("/ActivityPage")
-	public String index(Model model) {
+	public String index(Model model, @ModelAttribute("user") UserBean usmb) {
 		System.out.println("-------------/----------");
 		List<ActivityBean> activityList = activityService.selectAllUsers();
 		model.addAttribute("activityListPage", activityList);
 		model.addAttribute("activityPage", new ActivityBean());
-
+		System.out.println("admin"+usmb.getUsername());
 		return "Activity_28/ActivityPage";
 	}
 	
@@ -217,6 +231,19 @@ public class ActivityController {
 	
 				
 		return "GroupOneHome";
+	}
+	
+	//冠宇logout方法
+	@GetMapping("/Userlogout2")
+	public String userLogout(Model model, SessionStatus status) {
+
+		UserBean loggedInUser = (UserBean) model.getAttribute("user");
+		if (loggedInUser != null) {
+			status.setComplete(); // 清除該Controller類別列出的@SessionAttributes
+		}
+
+
+		return "redirect:/ActivityPage";
 	}
 
 }

@@ -55,15 +55,16 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                         <!-- <a class="log-popup-btn" href="#" title="Login" itemprop="url">登入</a>
                          <a class="sign-popup-btn" href="#" title="Register" itemprop="url">註冊</a>
                          <a class="sign-popup-btn" href="#" title="Register" itemprop="url">賣家中心</a>-->
+                        
                         <c:choose>
-                            <c:when test="${empty user}">
-                                <a class="log-popup-btn" href="./login" title="Login" itemprop="url">登入</a>
-                                <a class="sign-popup-btn" href="./register" title="Register" itemprop="url">註冊</a>
-                                <a class="sign-popup-btn" href="#" title="Register" itemprop="url">賣家中心</a>
+                            <c:when test="${user.username == null}">
+                                <a  href="home" title="Login" itemprop="url">登入</a>
+                                <a  href="./register" title="Register" itemprop="url">註冊</a>
+                                <a  href="home" title="Register" itemprop="url">賣家中心</a>
                             </c:when>
                             <c:otherwise>
                                 <span>${user.getUsername()}</span>&nbsp&nbsp&nbsp
-                                <a class="sign-popup-btn" href="#" title="Register" itemprop="url">登出</a>
+                                <a class="sign-popup-btn" href="logout" title="Register" itemprop="url">登出</a>
                             </c:otherwise>
                         </c:choose>
                     </div>

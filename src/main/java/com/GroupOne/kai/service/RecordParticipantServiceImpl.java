@@ -37,7 +37,7 @@ public class RecordParticipantServiceImpl implements RecordParticipantService {
 		
 		return recordParticipantRepository.findAll();
 	}
-
+	//delete
 	@Override
 	public void deleteRecordParticipant(int id) {
 		

@@ -93,10 +93,9 @@ public class UserLoginController{
 //			UserBean user = userDao.checkLogin(username, password, email);
 //				user = ullService.checkLogin(username, password, email);
 //				user = ullService.checkLogin(uBean.getUsername(), uBean.getPassword(), uBean.getEmail());
+
 				user = ullService.findByUsernameAndPasswordAndEmail(
 						userLoginBean.getUsername(), userLoginBean.getPassword(), userLoginBean.getEmail());
-				
-			
 				if (user != null) {
 //				session = request.getSession();
 //				session.setAttribute("user", user);
@@ -124,6 +123,12 @@ public class UserLoginController{
 		public String userHome(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 //			UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
 			UserBean existingUser = (UserBean)model.getAttribute("user");
+			
+			try {
+				System.out.println("?//////+"+existingUser.getEmail());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			if (existingUser != null) {
 				return "userDash";
 			}else {

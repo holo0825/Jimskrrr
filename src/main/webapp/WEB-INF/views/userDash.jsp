@@ -16,7 +16,7 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
     <div style="text-align: center">
-        <h1>歡迎回到買家平台</h1>
+        <h1>歡迎回到買家平台</h1>${user.username}
         <b>${user.fullname} | ${user.email}</b>
         <br><br>
 <!--         <a href="Userlogout">Logout</a> -->
@@ -24,6 +24,7 @@ pageEncoding="UTF-8"%>
         <a href=".\UserEditProfile">編輯個人資料</a> &nbsp;&nbsp;
         <a href="./Customer">團購</a> &nbsp;&nbsp;
         <a href="./top">餐廳</a>
+        <a href="./ActivityPage">活動</a>
         <br><br>        
         <!-- 
         <a href="userUpdate.jsp">編輯買家個人資料</a>

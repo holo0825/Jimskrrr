@@ -584,7 +584,7 @@ body {
 		
 		<div class="col-md-12 text-center">
 		
-			<a value="前端" href="<c:url value='/ActivityList'/>">前端</a>
+			<a value="前端" href="<c:url value='/ActivityPage'/>">前端</a>
 		
 <%-- 		 	<a value="管理報名者頁" href="<c:url value='/RecordParticipantBack'/>">管理報名者頁</a> --%>
 			<button type="button" class="btn btn-primary" data-toggle="modal"

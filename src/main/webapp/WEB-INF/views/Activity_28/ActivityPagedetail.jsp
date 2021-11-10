@@ -294,14 +294,14 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
 <!--         <a class="text-decoration-none co" style="font-size:x-small; margin-right: 153px;" font color="#FFFFFF">賣家中心</a> -->
         
         <c:choose>
-             <c:when test="${empty user}">
-             	<a class="log-popup-btn  loingcolor" style="font-size:x-small; padding-right: 3px;" href="./login" title="Login" itemprop="url">登入</a>
+             <c:when test="${user.username==null}">
+             	<a class="log-popup-btn  loingcolor" style="font-size:x-small; padding-right: 3px;" href="<c:url value='/UserTryLogin' />" title="Login" itemprop="url">登入</a>
                 <a class="sign-popup-btn loingcolor" style="font-size:x-small; padding-right: 3px;"   href="./register" title="Register" itemprop="url">註冊</a>
                 <a class="sign-popup-btn loingcolor" style="font-size:x-small; margin-right: 160px;"  href="#" title="Register" itemprop="url">賣家中心</a>
              </c:when>
              <c:otherwise>
-             	<span>${user.getUsername()}</span>&nbsp&nbsp&nbsp
-             	<a class="sign-popup-btn loingcolor" href="#" title="Register" itemprop="url">登出</a>
+             	<span style="color:white;">${user.username}</span>&nbsp&nbsp&nbsp
+             	<a class="sign-popup-btn loingcolor" href="<c:url value='/Userlogout2' />" title="Register" itemprop="url">登出</a>
              </c:otherwise>
         </c:choose>
     </nav>
@@ -419,8 +419,14 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                    <!--     <form class="needs-validation" novalidate>  -->            
-                                        
+                    <!--     <form class="needs-validation" novalidate>  -->
+                                			<c:if test="${!empty user}">
+                                        	<div class="form-group text-left col-md-8 mrml" >
+                                                <label for="validationCustom01" >使用者帳號</label><br>
+                                                 <span style="color:balck;">${user.username}</span>
+                                                
+                                            </div>
+                                            </c:if>
                                             <div class="form-group text-left col-md-8 mrml" >
                                                 <label for="validationCustom01" >帳號</label>
                                                  <form:input type="text" path="u_userid"  Class="form-control" id="nameid" value="" required="required" />

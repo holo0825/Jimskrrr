@@ -31,7 +31,6 @@
             color: #566787;
             background: #f8f9fe;
             font-family: 'Roboto', sans-serif;
-          
    			margin-left: 150px;
         }
 
@@ -180,6 +179,9 @@
             border-bottom-width: 0px;
             border-right-width: 0px;
         }
+        .container, .container-lg, .container-md, .container-sm, .container-xl {
+   			max-width:1250px;
+   }
   /*後台*/
 .sidenav {
   height: 100%;
@@ -387,12 +389,14 @@
                         <tr>
                             <th>ID</th>
                             <th >廠商帳號 <i class="fa fa-sort"></i></th>
+                            <th>活動序號</th>
                             <th>廠商活動</th>
                             <th>顧客帳號 <i class="fa fa-sort"></i></th>
                             <th>顧客名稱</th>
                             <th>顧客電話 <i class="fa fa-sort"></i></th>
                             <th>顧客Email</th>
                             <th>類型</th>
+                            <th>顧客ID</th>
                             <th>Actions</th>
                         </tr>
 					</thead>
@@ -401,17 +405,20 @@
                         <tr>
                             <td>${RecordParticipant.recordId}</td>
                             <td>${RecordParticipant.s_username}</td>
+                            <td>${RecordParticipant.activity_id}</td>
                             <td>${RecordParticipant.activity_topic}</td>
                             <td>${RecordParticipant.u_userid}</td>
                             <td>${RecordParticipant.u_username}</td>
                             <td>${RecordParticipant.u_phone}</td>
                             <td>${RecordParticipant.sent_email}</td>
                             <td>${RecordParticipant.u_styles}</td>
+                            <td>${RecordParticipant.user_username}</td>
+                            
                             <td>
                                 
-								<a href="<c:url value='/activitypage?id=${RecordParticipant.recordId}' />" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
+								<a href="<c:url value='/activitypage?id=${RecordParticipant.activity_id}' />" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
 
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+<!--                                 <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a> -->
 
 								<a href='#' onclick="if(window.confirm('確定要刪除？')) location.href ='<c:url value='/delete?id=${RecordParticipant.recordId}'/>'" class="delete" title="Delete" data-toggle="tooltip">
 	         								<i class="material-icons">&#xE872;</i>

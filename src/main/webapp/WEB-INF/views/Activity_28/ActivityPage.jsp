@@ -371,14 +371,14 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
 <%--         <a class="text-decoration-none co" style="font-size:x-small; padding-right: 5px;" font color="#FFFFFF" href="<c:url value='/' />">註冊</a> --%>
 <%--         <a class="text-decoration-none co" style="font-size:x-small; margin-right: 153px;" font color="#FFFFFF" href="<c:url value='/' />">賣家中心</a> --%>
         <c:choose>
-             <c:when test="${empty user}">
-             	<a class="log-popup-btn  loingcolor" style="font-size:x-small; padding-left: 5px;padding-right: 3px;" href="./login" title="Login" itemprop="url">登入</a>
+             <c:when test="${user.username == null}">
+             	<a class="log-popup-btn  loingcolor" style="font-size:x-small; padding-left: 5px;padding-right: 3px;" href="home" title="Login" itemprop="url">登入</a>
                 <a class="sign-popup-btn loingcolor" style="font-size:x-small; padding-right: 3px;"   href="./register" title="Register" itemprop="url">註冊</a>
                 <a class="sign-popup-btn loingcolor" style="font-size:x-small; margin-right: 153px;"  href="#" title="Register" itemprop="url">賣家中心</a>
              </c:when>
              <c:otherwise>
-             	<span>${user.username}</span>&nbsp&nbsp&nbsp
-             	<a class="sign-popup-btn loingcolor" href="#" title="Register" itemprop="url">登出</a>
+             	<span style="color:white;">${user.username}</span>&nbsp&nbsp&nbsp
+             	<a class="sign-popup-btn loingcolor" href="<c:url value='/Userlogout2' />" title="Register" itemprop="url">登出</a>
              </c:otherwise>
         </c:choose>
         
@@ -466,10 +466,10 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
     
 	<!--篩選-->
 		<div id="myBtnContainer" class="" style="margin-left: 210px;">
-	        <button class="bttn activee btn btn-outline-warning font-weight-bold" onclick="filterSelection('all')">全部</button>
-	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('體驗')">體驗</button>
-	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('宣傳活動')">宣傳活動</button>
-	        <button class="bttn btn btn-outline-warning font-weight-bold" onclick="filterSelection('比賽')">比賽</button>
+	        <button class="bttn activee btn btn-warning font-weight-bold" onclick="filterSelection('all')">全部</button>
+	        <button class="bttn btn btn-warning font-weight-bold" onclick="filterSelection('體驗')">體驗</button>
+	        <button class="bttn btn btn-warning font-weight-bold" onclick="filterSelection('宣傳活動')">宣傳活動</button>
+	        <button class="bttn btn btn-warning  font-weight-bold" onclick="filterSelection('比賽')">比賽</button>
 	        
 	    </div>
 	    
