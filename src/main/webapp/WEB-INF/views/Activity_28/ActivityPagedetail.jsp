@@ -231,7 +231,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
     var nameid= ["a2152265", 'tony5566','coding789'];
     var byname= ["張震嶽", "柯震東","姚中仁"];
     var phone= ["0972643298", '0963158752','0912759356'];
-    var email= ["a2152265@gmail.com", 'tony5566@gmail.com','coding789@gmail.com'];
+    var email= ["coding00825@gmail.com", 'coding00825@gmail.com','coding00825@gmail.com'];
     function quickInput(){
      document.getElementById('nameid').value = nameid[index];
      document.getElementById('name').value = byname[index];
@@ -389,7 +389,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                 <p><c:out value="${activityListdetail.quota}" />人</p>
 
                 <h5 class="row1 display-5 font-weight-bold" >注意事項</h5>
-                <p><c:out value="${activityListdetail.notice}" /></p>
+                <p style=" color:#ff0000;"><c:out value="${activityListdetail.notice}" /></p>
 
                 <h5 class="row1 display-5 font-weight-bold" >點數</h5>
                 <p><c:out value="${activityListdetail.bonus_point}" /></p>

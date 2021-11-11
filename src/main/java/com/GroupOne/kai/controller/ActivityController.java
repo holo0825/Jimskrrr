@@ -36,7 +36,7 @@ public class ActivityController {
 	UserRegisterService userRegisterService;
 	
 	//mail
-	//@Autowired
+	@Autowired
 	JavaMailSender mailSender;
 	@Autowired
 	public ActivityController(ActivityService activityService,RecordParticipantService recordParticipantService) {
@@ -111,12 +111,15 @@ public class ActivityController {
 			
 			
 			//寄信
-//			SimpleMailMessage message =new SimpleMailMessage();
-//			  message.setTo("holo860825@gmail.com");
-//			  message.setSubject("聚點食刻-活動");
-//			  message.setText("您在聚點食刻活動報名完成");
-//			  
-//			  mailSender.send(message);
+			SimpleMailMessage message =new SimpleMailMessage();
+			  message.setTo("holo860825@gmail.com");
+			  message.setSubject("聚點食刻-活動小組");
+			  message.setText("感謝您報名參加此次'異國料理輕鬆做'的活動，"
+			  		+ "您在聚點食刻報名的活動已完成，"
+					+ "\r\n"
+					+ "請留意活動時間：2021/11/20 2pm-3pm(1:30開放入場)，謝謝您");
+			  
+			  mailSender.send(message);
 			return "Activity_28/ActivitySignUpSuccess";
 		}
 	
