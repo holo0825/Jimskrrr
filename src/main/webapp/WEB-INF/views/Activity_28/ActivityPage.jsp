@@ -37,7 +37,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
         }
         .MR {
 
-           margin-right: 150px;
+           margin-right: 203px;
         }
         .he{
             height:63px;
@@ -393,21 +393,26 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
         </button>
 
         <div class="collapse navbar-collapse MR" id="navbarSupportedContent" >
+        
+					<a href="<c:url value='/GroupOneHome' />" title="/GroupOneHome" itemprop="url">
+						<img style="width:150px;margin-top: 5px;" src="assets/images/icon_get_together.png" alt="Logo.png" itemprop="image">
+					</a>
+
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
                     <a class="nav-link font-weight-bold fonts" href="<c:url value='/GroupOneHome' />">首頁 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold fonts" href="#">餐廳</a>
+                    <a class="nav-link font-weight-bold fonts" href="<c:url value='/searchallrestaurant' />">餐廳</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold fonts" href="./CartList/coupon">團購</a>
+                    <a class="nav-link font-weight-bold fonts" href="<c:url value='/' />">團購</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold fonts" href="<c:url value='/ActivityPage' />">活動</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link font-weight-bold fonts" href="#">討論區</a>
+                    <a class="nav-link font-weight-bold fonts" href="<c:url value='/ShowArticlesGuest' />">討論區</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle font-weight-bold fonts dropdown-toggle::after" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -415,8 +420,8 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                         購物車
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">訂餐</a>
-                        <a class="dropdown-item" href="#">團購</a>
+                        <a class="dropdown-item" href="<c:url value='/user/CartList/food' />">訂餐</a>
+                        <a class="dropdown-item" href="<c:url value='/user/CartList/coupon' />">團購</a>
                         
                     </div>
                 </li>
@@ -424,7 +429,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                     <a class="nav-link dropdown-toggle font-weight-bold fonts dropdown-toggle::after" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     會員中心</a>
                     <div class="sub-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="./AllCarts" itemprop="url">訂單紀錄</a>
+                        <a class="dropdown-item" href="<c:url value='/user/AllCarts' />" itemprop="url">訂單紀錄</a>
                         
                     </div>
                     

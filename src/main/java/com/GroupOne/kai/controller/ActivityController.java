@@ -104,7 +104,7 @@ public class ActivityController {
 			System.out.println(topic+rpBean.getU_userid()+","+rpBean.getU_username()+","+rpBean.getU_phone()+","+rpBean.getSent_email()
 			+","+style+","+new Date());
 			int quota =ab.get().getQuota()-1;
-			if (quota>0) {
+			if (quota>=0) {
 				recordParticipantService.updatequota(id,quota);
 			}else {
 				return "Activity_28/ActivitySignUpError";

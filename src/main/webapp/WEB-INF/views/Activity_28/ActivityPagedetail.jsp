@@ -47,7 +47,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
     }
 
     .MR {
-        margin-right: 150px;
+        margin-right: 203px;
     }
 
     .he {
@@ -314,6 +314,10 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
         </button>
 
         <div class="collapse navbar-collapse MR" id="navbarSupportedContent">
+        
+        	<a href="<c:url value='/GroupOneHome' />" title="GroupOneHome" itemprop="url">
+						<img style="width:150px;margin-top: 5px;" src="assets/images/icon_get_together.png" alt="Logo.png" itemprop="image">
+			</a>
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
                     <a class="nav-link font-weight-bold fonts" href="<c:url value='/GroupOneHome' />">首頁 <span class="sr-only">(current)</span></a>
@@ -328,7 +332,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                     <a class="nav-link font-weight-bold fonts" href="<c:url value='/ActivityPage' />">活動</a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link font-weight-bold fonts" href="#">討論區</a>
+                    <a class="nav-link font-weight-bold fonts" href="<c:url value='/ShowArticlesGuest' />">討論區</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle font-weight-bold fonts dropdown-toggle::after" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -336,20 +340,25 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                         購物車
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">訂餐</a>
-                        <a class="dropdown-item" href="#">團購</a>
+                        <a class="dropdown-item" href="<c:url value='/user/CartList/food' />">訂餐</a>
+                        <a class="dropdown-item" href="<c:url value='/user/CartList/coupon' />">團購</a>
 
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link font-weight-bold fonts" href="#">會員中心</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link font-weight-bold fonts dropdown-toggle::after" href="#" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    會員中心</a>
+                    <div class="sub-dropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<c:url value='/user/AllCarts' />" itemprop="url">訂單紀錄</a>
+                        
+                    </div>
                 </li>
             </ul>
         </div>
     </nav>
 
         
-    <div class="container">
+    <div class="container ">
         <div class="row"id="row">
 <%--         	<c:forEach var="activityPage" items="${activityListdetail}"> --%>
             <div class="jumbotron">
@@ -422,7 +431,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                     <!--     <form class="needs-validation" novalidate>  -->
                                 			<c:if test="${!empty user}">
                                         	<div class="form-group text-left col-md-8 mrml" >
-                                                <label for="validationCustom01" >使用者帳號</label><br>
+                                                <label for="validationCustom01">使用者名稱</label><br>
                                                  <span style="color:balck;">${user.username}</span>
                                                 
                                             </div>
@@ -458,7 +467,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                                                     已確認報名資料正確
                                                 </label>
                                                 <div class="invalid-feedback">
-                                                    You must agree before submitting.
+                                                    提交前請先同意輸入資料是否正確
                                                 </div>
                                             </div>
                                         </div>

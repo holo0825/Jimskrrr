@@ -84,16 +84,16 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#" title="RESTAURANTS" itemprop="url"><span class="red-clr"></span>餐廳</a>
+                                    <a href="<c:url value='/searchallrestaurant' />" title="RESTAURANTS" itemprop="url"><span class="red-clr"></span>餐廳</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#" title="PAGES" itemprop="url"><span class="red-clr"></span>團購</a>
+                                    <a href="<c:url value='/' />" title="PAGES" itemprop="url"><span class="red-clr"></span>團購</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#" title="PAGES" itemprop="url"><span class="red-clr"></span>活動</a>
+                                    <a href="<c:url value='/' />" title="PAGES" itemprop="url"><span class="red-clr"></span>活動</a>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="#" title="PAGES" itemprop="url"><span class="red-clr"></span>討論區</a>
+                                    <a href="<c:url value='/' />" title="PAGES" itemprop="url"><span class="red-clr"></span>討論區</a>
 
                                 </li>
                                 <li class="menu-item-has-children">
