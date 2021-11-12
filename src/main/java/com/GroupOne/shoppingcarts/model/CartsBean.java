@@ -33,6 +33,7 @@ public class CartsBean implements Serializable{
 	private Integer discount;
 	private Integer disAmount;
 	private String transactionalNum;
+	private String refund;
 	
 	@Transient
 	private String stringDate;
@@ -41,6 +42,22 @@ public class CartsBean implements Serializable{
 		super();
 	}
 	
+	public CartsBean(int itemNo, String username, Integer amount, Date payday, Float points, String wrong, String type,
+			Integer discount, Integer disAmount, String transactionalNum, String refund) {
+		super();
+		this.itemNo = itemNo;
+		this.username = username;
+		this.amount = amount;
+		this.payday = payday;
+		this.points = points;
+		this.wrong = wrong;
+		this.type = type;
+		this.discount = discount;
+		this.disAmount = disAmount;
+		this.transactionalNum = transactionalNum;
+		this.refund = refund;
+	}
+
 	public CartsBean(int itemNo, String username, Integer amount, Date payday, Float points, String wrong, String type,
 			Integer discount, Integer disAmount, String transactionalNum) {
 		super();
@@ -186,6 +203,14 @@ public class CartsBean implements Serializable{
 
 	public void setStringDate(String stringDate) {
 		this.stringDate = stringDate;
+	}
+
+	public String getRefund() {
+		return refund;
+	}
+
+	public void setRefund(String refund) {
+		this.refund = refund;
 	}
 	
 }

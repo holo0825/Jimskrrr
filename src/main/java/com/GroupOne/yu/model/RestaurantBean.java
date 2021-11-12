@@ -5,8 +5,13 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity 
 @Table(name="restaurant")
@@ -14,45 +19,91 @@ public class RestaurantBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="USERNAME")
-	//@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private int id;
 	private String userName;  //經營者姓名
 	private String mobile;  //經營者電話
-	private String rstname;  //餐廳名稱
+	private String rstName;  //餐廳名稱
 	private String license;  //經營許可證號碼
-	private String rstaddress;  //餐廳地址
-	private String rsttel;  //餐廳電話
+	private String rstAddress;  //餐廳地址
+	private String rstTel;  //餐廳電話
 	private String category;  //餐廳種類
-	private String businesshour;  //營業時間
-	//private Blob rstImage; //餐廳形象照
-//	private MenuBean menuBean;
+	private String businessHour;  //營業時間	
+
+	private byte[] rstImage; //餐廳形象照
+	@Transient
+	private MultipartFile image; // 拿來暫時存放 圖片 // 上傳之圖片
+
+	private String offshelf;
 	
-	
-//	@OneToMany(mappedBy="restaurantBean")
-//	private Set<MenuBean> menu = new LinkedHashSet<>();
 
 	public RestaurantBean() {
-		//super();
 	}
-
-	public RestaurantBean(String rstname) {
-		super();
-		this.rstname = rstname;
+	
+	public RestaurantBean(String rstName) {
+		this.rstName = rstName;
 	}
+	
 
-
-	public RestaurantBean(String userName, String mobile, String rstname, String license, String rstaddress,
-			String rsttel,String category, String businesshour) {
-		super();
+	//CRUD用
+	public RestaurantBean(String userName, String mobile, String rstName, String license, String rstAddress,
+			String rstTel, String category, String businessHour, byte[] rstImage) {
 		this.userName = userName;
 		this.mobile = mobile;
-		this.rstname = rstname;
+		this.rstName = rstName;
 		this.license = license;
-		this.rstaddress = rstaddress;
-		this.rsttel = rsttel;
+		this.rstAddress = rstAddress;
+		this.rstTel = rstTel;
 		this.category = category;
-		this.businesshour = businesshour;
+		this.businessHour = businessHour;
+		this.rstImage = rstImage;				
+	}
+
+	
+	public RestaurantBean(String userName, String mobile, String rstName, String license, String rstAddress,
+			String rstTel,String category, String businessHour) {
+		this.userName = userName;
+		this.mobile = mobile;
+		this.rstName = rstName;
+		this.license = license;
+		this.rstAddress = rstAddress;
+		this.rstTel = rstTel;
+		this.category = category;
+		this.businessHour = businessHour;
+	}
+	
+	//存到資料庫用
+	public RestaurantBean(int id,String userName, String mobile, String rstName, String license, String rstAddress,
+			String rstTel,String category, String businessHour) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.mobile = mobile;
+		this.rstName = rstName;
+		this.license = license;
+		this.rstAddress = rstAddress;
+		this.rstTel = rstTel;
+		this.category = category;
+		this.businessHour = businessHour;
 		//this.rstImage = rstImage;
+	}
+	
+	// 提供上傳圖片功能
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getUserName() {
@@ -71,12 +122,12 @@ public class RestaurantBean implements Serializable {
 		this.mobile = mobile;
 	}
 
-	public String getRstname() {
-		return rstname;
+	public String getRstName() {
+		return rstName;
 	}
 
-	public void setRstname(String rstname) {
-		this.rstname = rstname;
+	public void setRstname(String rstName) {
+		this.rstName = rstName;
 	}
 
 	public String getLicense() {
@@ -87,20 +138,20 @@ public class RestaurantBean implements Serializable {
 		this.license = license;
 	}
 
-	public String getRstaddress() {
-		return rstaddress;
+	public String getRstAddress() {
+		return rstAddress;
 	}
 
-	public void setRstaddress(String rstaddress) {
-		this.rstaddress = rstaddress;
+	public void setRstAddress(String rstAddress) {
+		this.rstAddress = rstAddress;
 	}
 
-	public String getRsttel() {
-		return rsttel;
+	public String getRstTel() {
+		return rstTel;
 	}
 
-	public void setRsttel(String rsttel) {
-		this.rsttel = rsttel;
+	public void setRstTel(String rstTel) {
+		this.rstTel = rstTel;
 	}
 	
 	public String getCategory() {
@@ -111,12 +162,12 @@ public class RestaurantBean implements Serializable {
 		this.category = category;
 	}
 
-	public String getBusinesshour() {
-		return businesshour;
+	public String getBusinessHour() {
+		return businessHour;
 	}
 
-	public void setBusinesshour(String businesshour) {
-		this.businesshour = businesshour;
+	public void setBusinessHour(String businessHour) {
+		this.businessHour = businessHour;
 	}
 
 //	public Set<MenuBean> getMenu() {
@@ -130,13 +181,22 @@ public class RestaurantBean implements Serializable {
 		
 	}
 
-//	public Blob getRstImage() {
-//		return rstImage;
-//	}
-//
-//	public void setRstImage(Blob rstImage) {
-//		this.rstImage = rstImage;
-//	}
+	public String getOffshelf() {
+		return offshelf;
+	}
+
+	public void setOffshelf(String offshelf) {
+		this.offshelf = offshelf;
+	}
+
+	public byte[] getRstImage() {
+		return rstImage;
+	}
+
+	public void setRstImage(byte[] rstImage) {
+		this.rstImage = rstImage;
+	}
+
 
 
 }

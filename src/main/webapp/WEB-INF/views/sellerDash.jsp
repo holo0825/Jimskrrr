@@ -16,6 +16,13 @@ pageEncoding="UTF-8"%>
         <br><br>
 <!--         <a href="Sellerlogout">Logout</a> -->
         <a href=".\Sellerlogout">Logout</a>
+        <!-- Spring Security新增，必須加入才會登出 -->
+        <form action="/logout" method="post">
+		   <input type="hidden"
+		    name="${_csrf.parameterName}"
+		    value="${_csrf.token}"/>
+		  	<input type="submit" value="Logout">
+		 </form>
         <a href="./SellerMain">團購</a>
         <a href="./top">餐廳</a>
 

@@ -9,6 +9,8 @@ import com.GroupOne.shoppingcarts.model.ListBean;
 public interface ProductService {
 
 	// Carts
+	CartsBean findByCartItemNo(int itemNo);
+	
 	List<CartsBean> findByPaydayNotNull();
 
 	List<Object[]> findTwoAmountStatistics();
@@ -23,6 +25,8 @@ public interface ProductService {
 
 	void updateAmountAndPointsAndPaydayByUsernameAndItemNo(int amount, float points,Date payday, int dicount, int disAmount, String transactionalNum, String username, int itemNo);
 
+	void updateRefundByItemNoCart(String refund,int itemNo);
+	
 	void deleteCartByItemNo(int itemNo);
 
 	// List
@@ -36,7 +40,9 @@ public interface ProductService {
 
 	void updateNumberByItemNoAndProductName(int number, int itemNo, String productNmae);
 
-	void updateNumberAndExistByItemNoAndProductName(int number, String exist, int itemNo, String productNmae);
+	void updateExistByItemNo(String exist, int itemNo);
+	
+	void updateRefundByItemNoList(String refund,int itemNo);
 
 	void deleteListByItemNo(int itemNo);
 	

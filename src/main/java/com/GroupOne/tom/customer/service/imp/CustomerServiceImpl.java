@@ -41,5 +41,11 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return cart;
 	}
+	
+	@Override
+	public Optional<SellerProductBean> findById(int id) {
+		return customerRepository.findById(id);
+	}
+
 
 }

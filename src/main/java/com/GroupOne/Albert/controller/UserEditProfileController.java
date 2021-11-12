@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.UserBean;
 import com.GroupOne.Albert.service.UserManageService;
-
+@SessionAttributes(names = "user")
 @Controller
+@RequestMapping("/user")
 public class UserEditProfileController {
 
 	UserManageService userManageService;
@@ -25,9 +29,10 @@ public class UserEditProfileController {
 
 	@GetMapping("/UserEditProfile")
 	public String userEditProfile(Model model, HttpServletRequest request) {
-		UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+//		UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+		Member existingUser = (Member)request.getSession().getAttribute("user");
 		if (existingUser == null) { 
-			return "redirect:/UserHome";
+			return "redirect:/login";
 		}
 		return "userEditProfile";
 	}
@@ -45,20 +50,25 @@ public class UserEditProfileController {
 									@RequestParam(value="bonusPoint", defaultValue="0") Float bonusPoint,
 									Model model, HttpServletRequest request) throws SQLException {
 
-		UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+//		UserBean existingUser = (UserBean)request.getSession().getAttribute("user");
+//		Member existingUser = (Member)request.getSession().getAttribute("user");
+		Member existingUser = (Member) model.getAttribute("user");
 		if (existingUser == null) {
-			return "redirect:/UserHome";
+			return "redirect:/login";
 		}
 
 		
-		UserBean updateUserProfileBean;
+//		UserBean updateUserProfileBean;
+		Member updateUserProfileBean;
 //		if (username != null) {
-			updateUserProfileBean = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+//			updateUserProfileBean = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+			updateUserProfileBean = new Member(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
 			if (updateUserProfileBean != null) {
 				userManageService.updateUser(updateUserProfileBean);
-				request.getSession().setAttribute("user", updateUserProfileBean);
+//				request.getSession().setAttribute("user", updateUserProfileBean);
+				model.addAttribute("user", updateUserProfileBean);
 			}
 //		}
-		return "redirect:/UserHome";
+		return "redirect:/user/home";
 	}
 }

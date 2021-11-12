@@ -26,13 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.GroupOne.Albert.dao.UserManageDao;
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.dao.UserManageRepository;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.UserBean;
 import com.GroupOne.Albert.service.UserManageService;
 
 // Admin管理User會員專用的Controller
 @Controller
-@RequestMapping("/UserAll")
+//@RequestMapping("/UserAll")
+@RequestMapping("/admin")
 public class UserManageController {
 
 	UserManageService umService;
@@ -47,33 +49,26 @@ public class UserManageController {
 
 	@GetMapping("/listuser")
 	public String listUser(Model model) {
-//		List<UserBean> listUser = userDAO.selectAllUsers();
-		List<UserBean> listUser = umService.selectAllUsers();
-//		request.setAttribute("listUser", listUser);
+//		List<UserBean> listUser = umService.selectAllUsers();
+		List<Member> listUser = umService.selectAllUsers();
 		model.addAttribute("listUser", listUser);
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("user-list.jsp");
-//		dispatcher.forward(request, response);
-		return "user-list";
+//		return "user-list";
+		return "_new_user_list";
 	}
 
 	@GetMapping("/newuser")
 	public String showNewForm(Model model) {
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-//		dispatcher.forward(request, response);
 		return "user-form";
 	}
+	
 	// 點選編輯按鈕，抓取PathVariable的userId，根據userId查詢使用者資料，並填入編輯表單輸入框
 //	@GetMapping("/edituser")
 	@GetMapping("/edituser/{userId}")
 //	public String showEditForm(@RequestParam("id") int id, Model model) {
 	public String showEditForm(@PathVariable("userId") int userId, Model model) {
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		UserBean existingUser = userDAO.selectUser(id);
-		UserBean existingUser = umService.selectUser(userId);
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("user-form.jsp");
-//		request.setAttribute("user", existingUser);
+//		UserBean existingUser = umService.selectUser(userId);
+		Member existingUser = umService.selectUser(userId);
 		model.addAttribute("user", existingUser);
-//		dispatcher.forward(request, response);
 		return "user-form";
 	}
 
@@ -88,20 +83,10 @@ public class UserManageController {
 							 @RequestParam String homeNumber,
 							 @RequestParam(value="bonusPoint", defaultValue="0") float bonusPoint,
 							 Model model) throws SQLException {
-//		String username = request.getParameter("username");
-//		String password = request.getParameter("password");
-//		String fullname = request.getParameter("fullname");
-//		String dob = request.getParameter("dob");
-//		String gender = request.getParameter("gender");
-//		String email = request.getParameter("email");
-//		String phoneNumber = request.getParameter("phoneNumber");
-//		String homeNumber = request.getParameter("homeNumber");
-//		float bonusPoint = 0; // nullable
 
-		UserBean newUser = new UserBean(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
-//		userDAO.insertUser(newUser);
+//		UserBean newUser = new UserBean(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+		Member newUser = new Member(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
 		umService.insertUser(newUser);
-//		response.sendRedirect("./UserAll?action=listuser");
 		return "redirect:/UserAll/listuser";
 	}
 
@@ -119,21 +104,10 @@ public class UserManageController {
 							@RequestParam String homeNumber,
 							@RequestParam(value="bonusPoint", defaultValue="0") float bonusPoint,
 							Model model) throws SQLException {
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		String username = request.getParameter("username");
-//		String password = request.getParameter("password");
-//		String fullname = request.getParameter("fullname");
-//		String dob = request.getParameter("dob");
-//		String gender = request.getParameter("gender");
-//		String email = request.getParameter("email");
-//		String phoneNumber = request.getParameter("phoneNumber");
-//		String homeNumber = request.getParameter("homeNumber");
-//		float bonusPoint = 0; // nullable
 		
-		UserBean book = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
-//		userDAO.updateUser(book);
+//		UserBean book = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+		Member book = new Member(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
 		umService.updateUser(book);
-//		response.sendRedirect("./UserAll?action=listuser");
 		return "redirect:/UserAll/listuser";
 	}
 
@@ -141,10 +115,7 @@ public class UserManageController {
 	@GetMapping("/deleteuser/{userId}")
 //	public String deleteUser(@RequestParam int id, Model model) throws SQLException{
 	public String deleteUser(@PathVariable int userId, Model model) throws SQLException{
-//		int id = Integer.parseInt(request.getParameter("id"));
-//		userDAO.deleteUser(id);
 		umService.deleteUser(userId);
-//		response.sendRedirect("./UserAll?action=listuser");
 		return "redirect:/UserAll/listuser";
 	}
 	
@@ -162,7 +133,8 @@ public class UserManageController {
 	@GetMapping("/ajaxlistuser")
 	@ResponseBody
 	public String ajaxListUser(Model model) {
-		List<UserBean> listUser = umService.selectAllUsers();
+//		List<UserBean> listUser = umService.selectAllUsers();
+		List<Member> listUser = umService.selectAllUsers();
 		model.addAttribute("listUser", listUser);
 		return "user-list";
 	}
@@ -182,7 +154,8 @@ public class UserManageController {
 								@RequestParam(value="bonusPoint", defaultValue="0") float bonusPoint,
 								Model model) throws SQLException {
 		
-		UserBean book = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+//		UserBean book = new UserBean(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+		Member book = new Member(id, username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
 		umService.updateUser(book);
 		return "redirect:/UserAll/listuser";
 	}
@@ -200,7 +173,8 @@ public class UserManageController {
 								@RequestParam(value="bonusPoint", defaultValue="0") float bonusPoint,
 								Model model) throws SQLException {
 			
-		UserBean newUser = new UserBean(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+//		UserBean newUser = new UserBean(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
+		Member newUser = new Member(username, password, fullname, dob, gender, email, phoneNumber, homeNumber, bonusPoint);
 		umService.insertUser(newUser);
 		return "redirect:/UserAll/listuser";
 	}

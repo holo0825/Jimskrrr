@@ -42,8 +42,9 @@
 
 				<c:forEach var="pro" items="${Products}">
 					<div class="div">
-						<form action="<c:url value='/sellerUpdateForm' />" method="get">
-							id:<input type="text" id="number" name="productno" value="${pro.id}" readonly> <br>
+						<form action="<c:url value='/sellerUpdateForm' />" method="get" enctype="multipart/form-data">
+							<input type="hidden" id="number" name="productno" value="${pro.id}" > <br>
+							<img width='150'src="<c:url value='/getPictureSeller/${pro.id}'/>" /><br>
 							<label for="name">名稱:</label><input type="text" id="productname" name="productname"
 								value="${pro.name}"><br>
 							<label for="price">價格:</label><input type="number" id="price" name="price"

@@ -1,8 +1,8 @@
 package com.GroupOne.shoppingcarts.controller;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -15,27 +15,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.GroupOne.Albert.members.Member;
 import com.GroupOne.shoppingcarts.model.CartsBean;
 import com.GroupOne.shoppingcarts.model.ListBean;
 import com.GroupOne.shoppingcarts.service.ProductService;
-import com.GroupOne.tom.model.CartBean;
 
-
-@SessionAttributes({"admin","user","payProcess","productNameS","numberS"})
+@SessionAttributes({"user","payProcess"})
 @Controller
-//@RequestMapping("/shopping")
+@RequestMapping("/user")
 public class ShoppingCartsController {
 
 	ProductService productService;
-
-	String username = "JackyChen";
-
-//	String username ;     // password: Helloworld123
+	String username ;     // password: Helloworld123
+	CartsBean payProcess;
 
 	@Autowired
 	public ShoppingCartsController(ProductService productService) {
@@ -44,42 +43,28 @@ public class ShoppingCartsController {
 	}
 
 	@GetMapping("/CartListNew")
-
 	public String cartListNew(Model model,
-
 			@ModelAttribute("name") String productName,
 			@ModelAttribute("price") String priceS,
 			@ModelAttribute("number") String numberS,
 			@ModelAttribute("category") String typeS
-			
-//			@RequestParam("productName") String productName,
-//			@RequestParam("price") String priceS,
-//			@RequestParam("number") String numberS,
-//			@RequestParam("type") String typeS
  			) {
-//		String username = (String) model.getAttribute("user");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-//		this.username = username;
-		//CartBean cart = model.getAttribute("cart");
-		System.out.println("-------------------------");
-		System.out.println("123:"+productName);
-		System.out.println("123:"+priceS);
-		System.out.println("123:"+numberS);
-		System.out.println("123:"+typeS);
-//		System.out.println("123:"+cart.getName());
-		System.out.println("-------------------------");
-//		String productName = cart.getName();
-//		int price = Integer.parseInt(cart.getPrice());
-//		int number = Integer.parseInt(cart.getNumber());
-//		String type = cart.getCategory();
+		
+		if(model.getAttribute("user") == null) {
+			System.out.println("未登入");
+			return "redirect:/UserTryLogin";
+		}
+		Member userBean = (Member) model.getAttribute("user");
+		String username = userBean.getUsername();
+		System.out.println("user_name: "+username);
 		
 		int price = Integer.parseInt(priceS);
 		int number = Integer.parseInt(numberS);
 		String type =typeS;		
 		if (type.equals("group")) {
 			type = "coupon";
+		}else if(type.equals("food")) {
+			type = "food";
 		}
 		System.out.println("type:"+type);
 		System.out.println(productName+":"+price+":"+number+":"+type);
@@ -103,17 +88,29 @@ public class ShoppingCartsController {
 			ListBean lBean = new ListBean(itemNo,productName,number,price);
 			productService.saveList(lBean);
 		}
-		List<ListBean> findByItemNo = productService.findByItemNo(itemNo);
-		model.addAttribute("havePoint",productService.findByUsernametoCart(username));
-		model.addAttribute("no",itemNo);
-		model.addAttribute("info",username);
-		model.addAttribute("cartList",findByItemNo);
-		return "shopping/CartList";
+//		List<ListBean> findByItemNo = productService.findByItemNo(itemNo);
+		
+//		model.addAttribute("type",type);
+//		model.addAttribute("havePoint",productService.findByUsernametoCart(username));
+//		model.addAttribute("no",itemNo);
+//		model.addAttribute("info",username);
+//		model.addAttribute("cartList",findByItemNo);
+		return "redirect:/user/CartList/"+type;
 	}
-
+	
 	@GetMapping("/CartList/{type}")
-	public String cartFood(RedirectAttributes model,
+	public String cartListType(Model model,RedirectAttributes redModel,
 			@PathVariable("type") String type) {
+		
+		if(model.getAttribute("user") == null) {
+			System.out.println("未登入123");
+			return "redirect:/UserTryLogin";
+		}
+		Member userBean = (Member) model.getAttribute("user");
+		String username = userBean.getUsername();
+		System.out.println("user_name: "+username);
+		this.username = username;
+		
 		System.out.println("u:"+username+" t:"+type);
 		CartsBean cartBean = productService.findByUsernameAndTypeAndPaydayIsNullAndWrongIsNull(username, type);
 		int itemNo=-1;
@@ -121,153 +118,73 @@ public class ShoppingCartsController {
 			itemNo = cartBean.getItemNo();
 		}
 		System.out.println(cartBean);
-		model.addAttribute("itemNo",itemNo);
-		return "redirect:/CartListOld";
-	}
-	
-	@GetMapping("/CartListOld")
-	public String cartListOld(Model model,
-			@ModelAttribute("itemNo") int itemNo
-			) {
-
-//		String username = (String) model.getAttribute("user");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-//		this.username = username;	
-
-		System.out.println("ite:"+itemNo);
-
-		System.out.println("======================");
-		List<String> test123 = new ArrayList<>();
-		test123 = Arrays.asList("1","0","3");
 		
-		for (String s : test123) {
-			System.out.println(s);
-		}
-//		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-		System.out.println("======================");
-		model.addAttribute("test123",test123);
-		
-		
-//		model.addAttribute("havePoint",productService.findPointByUsernametoCart(username));
-		model.addAttribute("havePoint",productService.findByUsernametoCart(username)); //--------------------------------------------------------
+		model.addAttribute("havePoint",productService.findByUsernametoCart(username)); //---------------------------------------------
 		model.addAttribute("no",itemNo);
 		model.addAttribute("info",username);
 		model.addAttribute("cartList",productService.findByItemNo(itemNo));
+		
+		redModel.addAttribute("type",type);
+		redModel.addAttribute("itemNo",itemNo);
+//		return "redirect:/user/CartListOld";
 		return "shopping/CartList";
 	}
 	
-//	public List<Byte[]> productImages(int[] ints,HttpServletResponse resp){
-//		Byte[] NoImage = null;
-//		String filePath = "/resources/images/NoImage.jpg";
-//
-//		byte[] media = null;
-//		HttpHeaders headers = new HttpHeaders();
-//		String filename = "";
-//		int len = 0;
-//		BookBean bean = productService.getProductId(bookId);
-//		if (bean != null) {
-//			Blob blob = bean.getCoverImage();
-//			filename = bean.getFileName();
-//			if (blob != null) {
-//				try {
-//					len = (int) blob.length();
-//					media = blob.getBytes(1, len);  // 第一個位元組(因為JDBC從1開頭)
-//				} catch (SQLException e) {
-//					throw new RuntimeException("ProductController的getPicture()發生SQLException: " + e.getMessage());
-//				}
-//			} else {
-//				media = toByteArray(filePath);
-//				filename = filePath;
-//			}
-//		} else {
-//			media = toByteArray(filePath);
-//			filename = filePath;
-//		}
-//		headers.setCacheControl(CacheControl.noCache().getHeaderValue());  // 為避免抓錯檔案,不放入快取區
-//		String mimeType = servletContext.getMimeType(filename);
-//		MediaType mediaType = MediaType.valueOf(mimeType);
-//		System.out.println("mediaType =" + mediaType);
-//		headers.setContentType(mediaType);
-//		ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(media, headers, HttpStatus.OK);
-//		return responseEntity;
-//		return null;
-//	}
-	
-	
-	@GetMapping("/TwoCart")
-
-	public String twoCart(Model model) {
-
-//		String username = (String) model.getAttribute("user");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-//		this.username = username;
-		
-		
-		List<CartsBean> findTwoCart = productService.findByUsernameAndPaydayIsNullAndWrongIsNull(username);
-		System.out.println(username);
-		
-		String result=null;
-		if(findTwoCart.size() == 0) {
-			result = "NoItem";
-		}
-		model.addAttribute("result",result);
-		model.addAttribute("info",username);
-		model.addAttribute("twoCart",findTwoCart);
-		return "shopping/TwoCart";
-	}
-	
 	@GetMapping("/AllCarts")
-
 	public String allCarts(Model model) {
-
-//		String username = (String) model.getAttribute("user");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-//		this.username = username;
+		
+		if(model.getAttribute("user") == null) {
+			System.out.println("未登入");
+			return "redirect:/UserTryLogin";
+		}
+		Member userBean = (Member) model.getAttribute("user");
+		String username = userBean.getUsername();
+		System.out.println("user_name: "+username);
 
 		List<CartsBean> findAllCartByUsername = productService.findByUsernameAndPaydayNotNull(username);
 		model.addAttribute("allCarts",findAllCartByUsername);	
 		return "shopping/AllCarts";
 	}
 	
-	@GetMapping("/ListItem")
+	@PostMapping("/NumChangeList")
 	@ResponseBody
-	public List<ListBean> listItem(Model model,
-			@RequestParam("itemNo") int itemNo) {
-		return productService.findByItemNo(itemNo);
+	public void numChangeList(@RequestParam("itemNo") int itemNo,
+			@RequestParam("productName") String productName,
+			@RequestParam("number") int number
+			) {
+		System.out.println(itemNo+":"+productName+":"+number);
+		productService.updateNumberByItemNoAndProductName(number, itemNo, productName);
 	}
 	
-	@GetMapping("/DeleteCart")
+	@PostMapping("/DeleteCart")
 	public String delete(@RequestParam("itemNo") int itemNo) {
 		productService.deleteCartByItemNo(itemNo);
 		productService.deleteListByItemNo(itemNo);
-		return "redirect:/CartList/no";
+		return "redirect:/user/CartList/no";
 	}
 	
-	@GetMapping("/DeletePartList")
+	@PostMapping("/DeletePartList")
 	@ResponseBody
-	public String deletePartList(@RequestParam("itemNo") int itemNo,
+	public void deletePartList(@RequestParam("itemNo") int itemNo,
 			@RequestParam("productName") String productName
 			) {
 		productService.deleteByItemNoAndProductName(itemNo, productName);
-		return "delete success";
 	}
 	
 	@GetMapping("/Pay")    
 	public String pay(Model model) {
 		
 		if(model.getAttribute("payProcess") == null) {
-			return "redirect:/index";
+			System.out.println("123");
+			CartsBean cBean0 = (CartsBean) model.getAttribute("payProcess");
+			System.out.println("cBean0: "+cBean0);
+			System.out.println("cBean0.T:"+cBean0.getTransactionalNum());
+//			return "redirect:/index";
 		}
-		
 		CartsBean cartsBean = (CartsBean) model.getAttribute("payProcess");
-		String[] productNameS = (String[]) model.getAttribute("productNameS");
-		int[] numberS = (int[]) model.getAttribute("numberS");
+		System.out.println("cBean1: "+cartsBean);
+		
+//		CartsBean cartsBean = this.payProcess;
 		
 		int amount = cartsBean.getAmount();
 		String username = cartsBean.getUsername();
@@ -283,20 +200,15 @@ public class ShoppingCartsController {
 		
 		Date utilD = new Date();
 		productService.updateAmountAndPointsAndPaydayByUsernameAndItemNo(amount, disPoint, utilD, discount, disAmount, randomItemNo, username, itemNo);
+		productService.updateExistByItemNo("Y", itemNo);
 		
-		for (int i = 0; i < productNameS.length; i++) {
-			String productName = productNameS[i];
-			int number = numberS[i];
-			productService.updateNumberAndExistByItemNoAndProductName(number, "Y", itemNo, productName);
-		}
-		productService.deleteListByItemNo(itemNo);
-		return "redirect:/PayFinish";
+		return "redirect:/user/PayFinish";
 	}
 	
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!　　　預留使用(上:修改,下:紀錄)--順序: [] -> /PayProcess -> $$ -> /Pay
-	@GetMapping("/PayProcess")
+	@PostMapping("/PayProcess")
 //	@ResponseBody
-	public String payProcess(Model model,HttpServletRequest request,
+	public String payProcess(Model model,HttpServletRequest request,HttpServletResponse response,RedirectAttributes red,
 			@RequestParam("amount") int amount,
 			@RequestParam("point") float point,
 			@RequestParam("username") String username,
@@ -308,17 +220,15 @@ public class ShoppingCartsController {
 			@RequestParam("disPoint") float disPoint
 			) {
 		
-		System.out.println("紀錄");
+		String amountS = Integer.toString(amount);
 		
 		int random = (int) (10000 + ((Math.random() * 1000) + 1));
-		System.out.println("random: " + random);
-		String randomItemNo = "EEIT" + random + itemNo;  // -----------
+		String randomItemNo = "EEIT" + random + itemNo;
 		
 		CartsBean payProcess = new CartsBean(amount,disPoint,username,itemNo,discount,disAmount,randomItemNo);
-		
+		System.out.println(payProcess);
 		model.addAttribute("payProcess",payProcess);
-		model.addAttribute("productNameS",productNameS);
-		model.addAttribute("numberS",numberS);
+		this.payProcess = payProcess;
 		
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < productNameS.length; i++) {
@@ -328,90 +238,48 @@ public class ShoppingCartsController {
 				sb.append(productNameS[i] + "x" + numberS[i]);
 			}
 		}
-		String itemName = sb.toString();  // ----------
-		System.out.println(itemName);
+		String itemName = sb.toString();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		String now = sdf.format(date);  // ----------
+		String now = sdf.format(date);
 		System.out.println(now);
 		
 		String stringURL = request.getHeader("Referer");
-		String sURL = stringURL.toString().substring(0, stringURL.toString().lastIndexOf("/"));
-		System.out.println("send:" + sURL);
-		String resultURL = sURL + "/Pay";
-		System.out.println(resultURL);
-		
-		return "redirect:/Pay";
-	}
-	
-	@GetMapping("/AdminCart")
-
-	public String adminFindAll(Model model) {
-
-//		String username = (String) model.getAttribute("admin");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-		System.out.println("admin_name: "+username);
-		List<CartsBean> findAllCartByUsername = productService.findByPaydayNotNull();
-		model.addAttribute("adminCart",findAllCartByUsername);
-		return "shopping/AdminCart";
-	}
-	
-	@GetMapping("/Adminstatistics.cart")
-
-	public String admintatisticsCart(Model model) {
-
-//		String username = (String) model.getAttribute("admin");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-		
-		List<Object[]> result = productService.findTwoAmountStatistics();
-		String pie = "[['Task', 'Hours per Day'],";
-		int i =0;
-		for(Object[] ob:result) {
-			String name = (String) ob[0];
-			if(name.equals("coupon")) {
-				name = "團購券";
-			}else {
-				name = "訂餐";
-			}
-			pie += "['"+name+"',"+ob[1]+"]";
-			i++;
-			if(i != result.size()) {				
-			pie += ",";
-			}
+		String sURL = null;
+		try {
+			URL url = new URL(stringURL);
+			String path = url.getPath();
+			String[] pathS = path.split("/");
+			sURL = url.getProtocol() + "://" + url.getAuthority()+"/"+pathS[1];
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		}
-		pie += "]";
-		model.addAttribute("pie",pie);
-		model.addAttribute("StatisticsCart",result);
-		return "shopping/Adminstatistics";
+		String resultURL = sURL + "/PayWait";
+		
+		red.addAttribute("now",now);
+		red.addAttribute("resultURL",resultURL);
+		red.addAttribute("randomItemNo",randomItemNo);
+		red.addAttribute("amountS",amountS);
+		red.addAttribute("itemName",itemName);
+
+		return "redirect:/gottoGreen";
 	}
 	
-	@GetMapping("/Adminstatistics.list")
-
-	public String admintatisticsList(Model model) {
-
-//		String username = (String) model.getAttribute("admin");
-//		if(username == null) {
-//			return "redirect:/testUser";
-//		}
-		
-		List<Object[]> result = productService.findListAmountStatistics();
-		String pie = "[['Task', 'Hours per Day'],";
-		int i =0;
-		for(Object[] ob:result) {
-			pie += "['"+ob[0]+":單價"+ob[1]+"元',"+ob[3]+"]";
-			i++;
-			if(i != result.size()) {				
-			pie += ",";
-			}
+	@PostMapping("/RefundApp")
+	@ResponseBody
+	public void refundApp(@RequestParam("itemNo") int itemNo,
+			@RequestParam("info") String info,
+			@RequestParam(value = "point",required = false,defaultValue = "0") float point
+			) {
+		productService.updateRefundByItemNoCart(info, itemNo);
+		if(info.equals("已退款")) {
+			productService.updateRefundByItemNoList(info, itemNo);
 		}
-		pie += "]";
-		model.addAttribute("pie",pie);
-		model.addAttribute("StatisticsList",result);
-		return "shopping/Adminstatistics";
+		if(point != 0) {
+			float havePoint = productService.findByUsernametoCart(username);
+			float NewPoint = havePoint - point;
+			productService.updatePointByUsernametoCart(NewPoint, username);
+		}
 	}
 }

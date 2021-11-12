@@ -21,7 +21,7 @@
                 timer: 3000
                 })
 
-                setTimeout("location.href='ActivityRegister'",2000)
+                setTimeout("location.href='admin/ActivityRegister'",2000)
 
 		
     </script>

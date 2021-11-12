@@ -71,6 +71,8 @@
 <!-- 			<a href=".\Register\SellerTryRegister">賣家用戶註冊</a> -->
 			<a href=".\Register\SellerTryRegister">賣家用戶註冊</a>
 			<div style="color:red">${message}</div>
+			<!-- Spring Security新增，必須加入 -->
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form:form>
 			<!-- Servlet舊版form表單 -->
 <!-- 		<form id="loginForm" action=".\Sellerlogin?action=sellerlogin" -->

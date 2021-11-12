@@ -15,8 +15,8 @@ pageEncoding="UTF-8"%>
 	crossorigin="anonymous">
 </head>
 <body>
-	
-	<%
+	<!-- 
+	< %
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -31,7 +31,7 @@ pageEncoding="UTF-8"%>
 	    out.println("</script>");
 	}
 	%>
-	
+	 -->
 	
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
@@ -45,10 +45,12 @@ pageEncoding="UTF-8"%>
 			<!-- 套用bootstrap CSS樣式 -->
 			<ul class="navbar-nav">
 <!-- 				<li><a href="user-list.jsp" -->
-				<li><a href=".\UserAll\listuser"
+<!-- 				<li><a href=".\UserAll\listuser" -->
+				<li><a href=".\listuser"
 					class="nav-link"><b>買家</b></a></li>
 <!-- 				<li><a href="seller-list.jsp" -->
-				<li><a href=".\UserAll\listuser"
+<!-- 				<li><a href=".\SellerAll\listseller" -->
+				<li><a href=".\listseller"
 					class="nav-link">賣家</a></li>
 					
 				<li><a href="<c:url value='/Adminstatistics.cart' />"
@@ -65,8 +67,8 @@ pageEncoding="UTF-8"%>
 	<br>
     <div style="text-align: center">
         <h1>歡迎回到管理員平台</h1>
-        <b>${admin.fullname} | ${admin.email}</b>
-        <br><br><div>${pageContext.request.userPrincipal.name}</div>
+        <b>${admin.fullname} | ${admin.email} | ${admin.password} | ${admin.memberRole}</b>
+        <br><br><div>${pageContext.request.userPrincipal.name} ???</div>
         <br><br>
         <br><br>
         <div>
@@ -75,19 +77,27 @@ pageEncoding="UTF-8"%>
         </div>
         <br><br>
         <a href=".\Adminlogout">登出</a>
+        <!-- Spring Security新增，必須加入才會登出 -->
+        <form action="/logout" method="post">
+		   <input type="hidden"
+		    name="${_csrf.parameterName}"
+		    value="${_csrf.token}"/>
+		  <input type="submit" value="Logout">
+		 </form>
+		 
     </div>
 s
 	<script>
         document.getElementById("manageUser").addEventListener("click", openUser)
         function openUser(){
 //             window.location.href='user-list.jsp';
-            window.location.href='./UserAll/listuser';
+            window.location.href='./listuser';
         }
 
         document.getElementById("manageSeller").addEventListener("click", openSeller)
         function openSeller(){
 //             window.location.href='seller-list.jsp';
-            window.location.href='./SellerAll/listseller';
+            window.location.href='./listseller';
         }
     </script>
 </body>

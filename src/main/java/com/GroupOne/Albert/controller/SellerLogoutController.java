@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.GroupOne.Albert.model.SellerBean;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.SellerBean;
 
 //Spring框架運用SessionStatus類別的setComplete()方法清除名為seller的@SessionAttributes
 @Controller
@@ -33,14 +34,11 @@ public class SellerLogoutController {
 //			session.removeAttribute("seller");
 //			session.invalidate(); //登出時關閉session
 //		}
-		SellerBean loggedInSeller = (SellerBean) model.getAttribute("seller");
+		Member loggedInSeller = (Member) model.getAttribute("seller");
 		if (loggedInSeller != null) {
 			status.setComplete(); // 清除該Controller類別列出的@SessionAttributes
 		}
 
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("sellerLogin.jsp");
-//		dispatcher.forward(request, response);
-//		return "redirect:/SellerTryLogin";
 		return "forward:/SellerTryLogin";
 	}
 

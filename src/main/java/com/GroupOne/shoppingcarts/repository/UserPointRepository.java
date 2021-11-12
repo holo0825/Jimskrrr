@@ -4,11 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.members.Member;
 
-public interface UserPointRepository extends JpaRepository<UserBean, Integer>{
 
-	UserBean findByUsername(String username);
+public interface UserPointRepository extends JpaRepository<Member, Integer>{
+
+	Member findByUsername(String username);
 	
 	@Modifying
 	@Query("update UserBean u set u.bonusPoint = ?1 where u.username = ?2")

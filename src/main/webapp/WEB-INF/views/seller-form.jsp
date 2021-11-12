@@ -15,8 +15,8 @@
 </head>
 <body>
 
-	
-	<%
+	<!-- 
+	< %
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -31,7 +31,7 @@
 	    out.println("</script>");
 	}*/
 	%>
-	
+	 -->
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
 		<nav class="navbar navbar-expand-md navbar-dark"
@@ -40,10 +40,12 @@
 			<!-- 導向首頁 -->
 <!-- 				<a href="seller-list.jsp" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a> -->
 			<c:if test="${seller != null}">
-				<a href="..\..\SellerAll\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a>
+<!-- 				<a href="..\..\SellerAll\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a> -->
+				<a href="..\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a>
 			</c:if>
 			<c:if test="${seller == null}">
-				<a href="..\SellerAll\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a>
+<!-- 				<a href="..\SellerAll\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a> -->
+				<a href="..\listseller" class="navbar-brand"> 聚點時刻 賣家用戶管理系統 </a>
 			</c:if>
 			</div>
 			<!-- 套用bootstrap CSS樣式 -->
@@ -51,28 +53,50 @@
 		<c:if test="${seller != null}">
 			<ul class="navbar-nav">
 <!-- 				<li><a href="user-list.jsp" -->
-				<li><a href="..\..\UserAll\listuser"
+<!-- 				<li><a href="..\..\UserAll\listuser" -->
+				<li><a href="..\listuser"
 					class="nav-link">買家</a></li>
 <!-- 				<li><a href=".\SellerAll?action=listseller" -->
-				<li><a href="..\..\SellerAll\listseller"
+<!-- 				<li><a href="..\..\SellerAll\listseller" -->
+				<li><a href="..\listseller"
 					class="nav-link"><b>賣家</b></a></li>
 <!-- 				<li><a href=".\Adminlogout" -->
 				<li><a href="..\..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+				    <!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+					    value="${_csrf.token}"/>
+					  	<input type="submit" value="Logout">
+					 </form>
+				</li>
 			</ul>
 		</c:if>
 		<!-- 新增賣家用戶 add seller -->	
 		<c:if test="${seller == null}">
 			<ul class="navbar-nav">
 <!-- 				<li><a href="user-list.jsp" -->
-				<li><a href="..\UserAll\listuser"
+<!-- 				<li><a href="..\UserAll\listuser" -->
+				<li><a href="..\listuser"
 					class="nav-link">買家</a></li>
 <!-- 				<li><a href=".\SellerAll?action=listseller" -->
-				<li><a href="..\SellerAll\listseller"
+<!-- 				<li><a href="..\SellerAll\listseller" -->
+				<li><a href="..\listseller"
 					class="nav-link"><b>賣家</b></a></li>
 <!-- 				<li><a href=".\Adminlogout" -->
 				<li><a href="..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+				    <!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+					    value="${_csrf.token}"/>
+					  	<input type="submit" value="Logout">
+					 </form>
+				</li>
 			</ul>
 		</c:if>
 		</nav>
@@ -85,13 +109,15 @@
 				<c:if test="${seller != null}">
 <!-- 					<form action=".\SellerAll?action=updateseller" method="post" > -->
 <!-- 					<form action="..\..\SellerAll\updateseller" method="get" > -->
-					<form action="..\..\SellerAll\ajaxupdateseller" method="post" onsubmit="return confirm('請確認是否變更賣家用戶資料');">
+<!-- 					<form action="..\..\SellerAll\ajaxupdateseller" method="post" onsubmit="return confirm('請確認是否變更賣家用戶資料');"> -->
+					<form action="..\ajaxupdateseller" method="post" onsubmit="return confirm('請確認是否變更賣家用戶資料');">
 					<input type="hidden" name="_method" value="put" />					
 				</c:if>
 				<c:if test="${seller == null}">
 <!-- 					<form action=".\SellerAll?action=insertseller" method="post" > -->
 <!-- 					<form action="..\SellerAll\insertseller" method="get" > -->
-					<form action="..\SellerAll\ajaxinsertseller" method="post" onsubmit="return confirm('請確認是否新增賣家用戶資料');">
+<!-- 					<form action="..\SellerAll\ajaxinsertseller" method="post" onsubmit="return confirm('請確認是否新增賣家用戶資料');"> -->
+					<form action=".\ajaxinsertseller" method="post" onsubmit="return confirm('請確認是否新增賣家用戶資料');">
 				</c:if>
 
 				<!-- c:if tag判斷seller是否存在，決定顯示選項為edit或add -->

@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GroupOne.Albert.dao.UserRegisterDao;
-import com.GroupOne.Albert.model.SellerBean;
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.dao.UserRegisterRepository;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.SellerBean;
+import com.GroupOne.Albert.members.oldusers.UserBean;
 import com.GroupOne.Albert.service.UserRegisterService;
 
 // 買家註冊和賣家註冊Service實作類別，實作RegisterService介面
@@ -16,11 +17,11 @@ import com.GroupOne.Albert.service.UserRegisterService;
 @Transactional
 public class UserRegisterServiceImpl implements UserRegisterService {
 
-	UserRegisterDao userRegisterDao;
+	UserRegisterRepository userRegisterRepo;
 
 	@Autowired
-	public UserRegisterServiceImpl(UserRegisterDao userRegisterDao) {
-		this.userRegisterDao = userRegisterDao;
+	public UserRegisterServiceImpl(UserRegisterRepository userRegisterRepo) {
+		this.userRegisterRepo = userRegisterRepo;
 	}
 	
 //	@Override
@@ -29,11 +30,13 @@ public class UserRegisterServiceImpl implements UserRegisterService {
 //	}
 
 	@Override
-	public String registerUser(UserBean userBean) {
+	public String registerUser(Member userBean) {
+//	public String registerUser(UserBean userBean) {
 		if (userBean != null) {
-			UserBean userRecord = userRegisterDao.findByUsername(userBean.getUsername());
+//			UserBean userRecord = userRegisterDao.findByUsername(userBean.getUsername());
+			Member userRecord = userRegisterRepo.findByUsername(userBean.getUsername());
 			if (userRecord == null) {
-				userRegisterDao.save(userBean);
+				userRegisterRepo.save(userBean);
 				return "買家用戶註冊成功！";
 			} else {
 				return "買家用戶註冊失敗，請再次確認"; // On failure, send a message from here.

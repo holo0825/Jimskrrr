@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.GroupOne.Albert.model.AdminBean;
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.members.Member;
+
+
 import com.GroupOne.Albert.service.UserRegisterService;
 import com.GroupOne.kai.model.ActivityBean;
 import com.GroupOne.kai.model.RecordParticipantBean;
@@ -74,18 +75,21 @@ public class ActivityController {
 				@RequestParam("id")int id,
 				@ModelAttribute("RecordParticipant") RecordParticipantBean rpBean,
 				//使用SessionAttributes引入UserBean user
-				@ModelAttribute("user") UserBean usBean,
+//				@ModelAttribute("user") Member usBean,
 				Model model) {
+			Member userBean = (Member) model.getAttribute("user");
+			String username = userBean.getUsername();
 			System.out.println("------------------立即報名送出-----------------------"+rpBean.getU_phone());
 			System.out.println("------------------立即報名送出---------------------id--"+id);
-			System.out.println("--------username----"+usBean.getUsername());
+//			System.out.println("--------username----"+usBean.getUsername());
 			model.addAttribute("RecordParticipant",rpBean);
 			Optional<ActivityBean> ab ;
 			ab= activityService.selectOneUsers(id);
 			String topic = ab.get().getTopic();
 			String style = ab.get().getStyle();
+			String Activityusername = ab.get().getUsername();
 			RecordParticipantBean rb =new RecordParticipantBean();
-			rb.setS_username("asd123");
+			rb.setS_username(Activityusername);
 			rb.setActivity_id(id);
 			rb.setActivity_topic(topic);
 			rb.setU_userid(rpBean.getU_userid());
@@ -93,7 +97,8 @@ public class ActivityController {
 			rb.setU_phone(rpBean.getU_phone());
 			rb.setSent_email(rpBean.getSent_email());
 			rb.setU_styles(style);
-			rb.setUser_username(usBean.getUsername());
+		//	rb.setUser_username(usBean.getUsername());
+			rb.setUser_username(username);
 			rb.setCreate_date(new Date());
 			System.out.println("*************************************************");
 			System.out.println(topic+rpBean.getU_userid()+","+rpBean.getU_username()+","+rpBean.getU_phone()+","+rpBean.getSent_email()
@@ -111,31 +116,31 @@ public class ActivityController {
 			
 			
 			//寄信
-			SimpleMailMessage message =new SimpleMailMessage();
-			  message.setTo("coding00825@gmail.com");
-			  message.setSubject("聚點食刻-活動小組");
-			  message.setText("感謝您報名參加此次'異國料理輕鬆做'的活動，"
-			  		+ "您在聚點食刻報名的活動已完成。"
-					+ "\r\n"
-					+ "請留意活動時間：2021/11/20 2pm-3pm(1:30開放入場)，謝謝您");
-			  
-			  mailSender.send(message);
+//			SimpleMailMessage message =new SimpleMailMessage();
+//			  message.setTo("coding00825@gmail.com");
+//			  message.setSubject("聚點食刻-活動小組");
+//			  message.setText("感謝您報名參加此次'異國料理輕鬆做'的活動，"
+//			  		+ "您在聚點食刻報名的活動已完成。"
+//					+ "\r\n"
+//					+ "請留意活動時間：2021/11/20 2pm-3pm(1:30開放入場)，謝謝您");
+//			  
+//			  mailSender.send(message);
 			return "Activity_28/ActivitySignUpSuccess";
 		}
 	
-	//一開始活動頁V
+	//一開始活動頁V @ModelAttribute("user") Member usmb
 	@GetMapping("/ActivityPage")
-	public String index(Model model, @ModelAttribute("user") UserBean usmb) {
+	public String index(Model model ) {
 		System.out.println("-------------/----------");
 		List<ActivityBean> activityList = activityService.selectAllUsers();
 		model.addAttribute("activityListPage", activityList);
 		model.addAttribute("activityPage", new ActivityBean());
-		System.out.println("admin"+usmb.getUsername());
+//		System.out.println("admin"+usmb.getUsername());
 		return "Activity_28/ActivityPage";
 	}
 	
-	//[後端]顯示所有資料V(舊版沒有再用)
-	@RequestMapping("/ActivityRegister")
+	//[後端]顯示所有資料V
+	@RequestMapping("admin/ActivityRegister")
 	public String list(Model model) {
 		List<ActivityBean> activityList = activityService.selectAllUsers();
 		System.out.println("-------------ActivityRegister----------");
@@ -197,7 +202,7 @@ public class ActivityController {
 		public String activityUpdate(@ModelAttribute("activity") ActivityBean activity, @RequestParam MultipartFile image) {
 			activityService.editActivity(activity, image);
 			
-			return "redirect:/ActivityRegister";
+			return "redirect:admin/ActivityRegister";
 
 	}
 		
@@ -212,12 +217,12 @@ public class ActivityController {
 		return "Activity_28/DeleteConfirm";
 	}
 
-	//[後端]確認刪除ID後V
+	//[後端]確認刪除ID後回ActivityRegister V
 	@PostMapping("/activityDelete")
 	public String delete(@RequestParam Integer id) {
 		activityService.deleteActivity(id);
 		
-		return "redirect:/ActivityRegister";
+		return "redirect:admin/ActivityRegister";
 	}
 	
 	
@@ -240,7 +245,7 @@ public class ActivityController {
 	@GetMapping("/Userlogout2")
 	public String userLogout(Model model, SessionStatus status) {
 
-		UserBean loggedInUser = (UserBean) model.getAttribute("user");
+		Member loggedInUser = (Member) model.getAttribute("user");
 		if (loggedInUser != null) {
 			status.setComplete(); // 清除該Controller類別列出的@SessionAttributes
 		}

@@ -31,7 +31,7 @@ public class RecordParticipantController {
 	}
 	
 	//[後端]顯示所有顧客資料
-	@GetMapping("/RecordParticipantBack")
+	@GetMapping("admin/RecordParticipantBack")
 	public String list(Model model) {
 			List<RecordParticipantBean> recordParticipantList = recordParticipantService.selectAllUsers();
 			//抓 JSP的<c:forEach var="..." items="${...}">存回model.addAttribute
@@ -69,7 +69,7 @@ public class RecordParticipantController {
 		public String delete(@RequestParam Integer id) {
 			recordParticipantService.deleteRecordParticipant(id);
 			
-			return "redirect:/RecordParticipantBack";
+			return "redirect:admin/RecordParticipantBack";
 		}
 	
 	

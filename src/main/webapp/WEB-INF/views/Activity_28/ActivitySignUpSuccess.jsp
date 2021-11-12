@@ -44,7 +44,7 @@
             
           `
 		  })
-		setTimeout("location.href='ActivityList'",2000)
+		setTimeout("location.href='ActivityPage'",2000)
 		
     </script>
 

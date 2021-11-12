@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -17,11 +16,15 @@ public class TestController {
 //	redirectAttributes.addFlashAttribute("modelData3", "這是加在RedirectAttributes" + "物件內的屬性物件，瀏覽器會顯示");
 //	redirectAttributes.addFlashAttribute("uri3", uri);
 //	return "redirect:/redirectAnother"; // 傳向新請求,model內無法存取
-
+	
+	@GetMapping({ "/tes123" })
+	public String tes123(Model model) {	
+		return "shopping/test/Test";
+	}
+	
+	
 	@GetMapping({ "/testUser" })
-
 	public String testUser(Model model) {
-
 		String t1 = (String) model.getAttribute("admin");
 		String t2 = (String) model.getAttribute("user");
 		if(t1 != null || t2 != null) {
@@ -58,11 +61,9 @@ public class TestController {
 	
 //	@ModelAttribute
 	
-
 	
 	@GetMapping({"/testProduct"})
 	public String testProduct(Model model,HttpServletRequest request) {
-
 
 		String admin =  (String) model.getAttribute("admin");
 		String user = (String) model.getAttribute("user");

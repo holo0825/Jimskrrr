@@ -555,9 +555,8 @@ body {
                         銷售管理
                     </a>
                     <ul class="collapse list-unstyled" id="page3">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
+                       <li><a href="<c:url value='/admin/AdminCart' />">訂單處理</a></li>
+                        <li><a href="<c:url value='/admin/Adminstatistics' />">商品統計</a></li>
                         
                     </ul>
                 </li>
@@ -568,10 +567,10 @@ body {
                     </a>
                     <ul class="collapse list-unstyled" id="page4">
                         <li>
-                            <a href="#">活動管理 明細</a>
+                            <a href="<c:url value='/admin/ActivityRegister'/>">活動管理 明細</a>
                         </li>
                         <li>
-                            <a href="<c:url value='/RecordParticipantBack'/>">報名參加者管理 明細</a>
+                            <a href="<c:url value='/admin/RecordParticipantBack'/>">報名參加者管理 明細</a>
                         </li>
                         
                     </ul>
@@ -800,10 +799,6 @@ body {
 					<ul class="pagination">
 						<li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
 						<li class="page-item active"><a href="#" class=" page-link">1</a></li>
-						<li class="page-item"><a href="#" class="page-link">2</a></li>
-						<li class="page-item "><a href="#" class="page-link">3</a></li>
-						<li class="page-item"><a href="#" class="page-link">4</a></li>
-						<li class="page-item"><a href="#" class="page-link">5</a></li>
 						<li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
 					</ul>
 					

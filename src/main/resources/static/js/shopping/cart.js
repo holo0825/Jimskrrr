@@ -60,6 +60,9 @@ $(function() {
 			$(this).val(1)
 		}
 		sumC()
+		let numChange = $(this).val()
+		let Product = $(this).closest('tr').children().eq(1).val()
+		changeNumber(Product,numChange)
 	})
 	$('tbody').on('click', '.minus', function() {   //數量減少
 		let nv = Number($(this).next().val())
@@ -69,12 +72,31 @@ $(function() {
 		}
 		$(this).next().val(afretnv)
 		sumC()
+		let numChange = $(this).next().val()
+		let Product = $(this).closest('tr').children().eq(1).val()
+		changeNumber(Product,numChange)
 	})
 	$('tbody').on('click', '.plus', function() {    //數量增加
 		let nv = Number($(this).prev().val())
 		$(this).prev().val(nv + 1)
 		sumC()
+		let numChange = $(this).prev().val()
+		let Product = $(this).closest('tr').children().eq(1).val()
+		changeNumber(Product,numChange)
 	})
+	
+	function changeNumber(Product,numChange){
+		let itemNo = $('#itemNo').val()
+		let productName = Product
+		let number = numChange
+		console.log(itemNo+";"+productName+";"+number)
+		$.ajax({
+			type:'POST',
+			url:'../NumChangeList',
+			data:'itemNo='+itemNo+'&productName='+productName+"&number="+number, 
+		})
+	}
+	
 	$('#updata').on('click', function() { //訂單確認
 		// document.forms[0].submit()
 		$('#pay').attr('disabled', false)
@@ -86,11 +108,23 @@ $(function() {
 		$('#usePoint').attr('disabled', true)
 		$('.disRadio').attr('disabled', true)
 		$('.fa-trash-alt, .fa-minus, .fa-plus').prop('style', 'color:grey')
+		
+		let cost = $('#amount').val()
+		let dis = '未使用點數折抵'
+		let disMoney = $("input[name=discount]:checked").val()
+		if($('#usePoint').val() == 1 && disMoney != null){
+			let discost = $('#disAmount').val()
+			dis = '使用'+disMoney+'點折抵'+','+'需付款'+discost+'元'
+		}
+		
+		Swal.fire('本次消費金額共 '+cost+' 元' +'</br>'
+				 +dis
+					)
 
 	})
 	$('#pay').on('click', function() {  //付款
 		$('.disRadio').attr('disabled', false)
-		document.forms['shoppingCarts'].action = "./PayProcess"
+		document.forms['shoppingCarts'].action = "../PayProcess"
 		document.forms['shoppingCarts'].submit()
 	})
 	//    $('tbody').on('click', '.delete', function () { //刪除
@@ -127,8 +161,8 @@ $(function() {
 				let deleteProduct = $(this).closest('tr').children().eq(1).val()
 				console.log(itemNo+ ' : ' + deleteProduct)
 				$.ajax({
-					type:'GET',
-					url:'./DeletePartList',
+					type:'POST',
+					url:'../DeletePartList',
 					data:'itemNo='+itemNo+'&productName='+deleteProduct, 
 				})
 				$(this).closest('tr').remove()
@@ -137,7 +171,7 @@ $(function() {
 					$('#point').val(0)
 					$('#amount').next().text(0)
 					$('#point').next().text(0)
-					document.forms['shoppingCarts'].action = "./DeleteCart"
+					document.forms['shoppingCarts'].action = "../DeleteCart"
 					document.forms['shoppingCarts'].submit()
 				} else {
 					sumC()

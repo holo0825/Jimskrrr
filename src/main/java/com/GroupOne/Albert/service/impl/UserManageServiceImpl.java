@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GroupOne.Albert.dao.UserManageDao;
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.dao.UserManageRepository;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.UserBean;
 import com.GroupOne.Albert.service.UserManageService;
 
 // Admin管理User會員Service實作類別，實作UserManageService介面
@@ -19,14 +20,11 @@ import com.GroupOne.Albert.service.UserManageService;
 @Service @Transactional
 public class UserManageServiceImpl implements UserManageService {
 
-	SessionFactory factory;
-	UserManageDao umDao;
+	UserManageRepository userManageRepo;
 	
 	@Autowired
-	public UserManageServiceImpl(SessionFactory factory, UserManageDao umDao) {
-		super();
-		this.factory = factory;
-		this.umDao = umDao;
+	public UserManageServiceImpl(UserManageRepository userManageRepo) {
+		this.userManageRepo = userManageRepo;
 	}
 
 //	@Override
@@ -34,8 +32,9 @@ public class UserManageServiceImpl implements UserManageService {
 //		umDao.insertUser(user);
 //	}
 	@Override
-	public void insertUser(UserBean user) throws SQLException {
-		umDao.save(user);
+	public void insertUser(Member user) throws SQLException {
+//	public void insertUser(UserBean user) throws SQLException {
+		userManageRepo.save(user);
 	}
 
 //	@Override
@@ -43,8 +42,9 @@ public class UserManageServiceImpl implements UserManageService {
 //		return umDao.selectUser(id);
 //	}
 	@Override
-	public UserBean selectUser(int id) {
-		return umDao.findById(id).get();
+	public Member selectUser(int id) {
+//	public UserBean selectUser(int id) {
+		return userManageRepo.findById(id).get();
 	}
 
 //	@Override
@@ -52,8 +52,9 @@ public class UserManageServiceImpl implements UserManageService {
 //		return umDao.selectAllUsers();
 //	}
 	@Override
-	public List<UserBean> selectAllUsers() {
-		return umDao.findAll();
+	public List<Member> selectAllUsers() {
+//	public List<UserBean> selectAllUsers() {
+		return userManageRepo.findAll();
 	}
 
 //	@Override
@@ -63,7 +64,7 @@ public class UserManageServiceImpl implements UserManageService {
 	@Override
 	public boolean deleteUser(int id) throws SQLException {
 		if (selectUser(id)!=null) {
-			umDao.deleteById(id);
+			userManageRepo.deleteById(id);
 			return true;
 		}
 		return false;
@@ -74,9 +75,10 @@ public class UserManageServiceImpl implements UserManageService {
 //		return umDao.updateUser(user);
 //	}
 	@Override
-	public boolean updateUser(UserBean user) throws SQLException {
+	public boolean updateUser(Member user) throws SQLException {
+//	public boolean updateUser(UserBean user) throws SQLException {
 		if (user != null) {
-			umDao.save(user);
+			userManageRepo.save(user);
 			return true;
 		}
 		return false;

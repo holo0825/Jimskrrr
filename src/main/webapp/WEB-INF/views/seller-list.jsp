@@ -57,8 +57,8 @@ $(document).ready(function(){
 
 </head>
 <body>
-	
-	<%
+	<!-- 
+	< %
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -73,26 +73,38 @@ $(document).ready(function(){
 	    out.println("</script>");
 	}*/
 	%>
-	 
+	  -->
 	
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: SkyBlue"> <!-- default is tomato -->
 			<div>
 <!-- 				<a href="seller-list.jsp" class="navbar-brand">  -->
-				<a href="..\SellerAll\listseller" class="navbar-brand"> 
+<!-- 				<a href="..\SellerAll\listseller" class="navbar-brand">  -->
+				<a href=".\listseller" class="navbar-brand"> 
 					聚點時刻 賣家用戶管理系統 </a>
 			</div>
 
 			<ul class="navbar-nav">
 <!-- 				<li><a href="user-list.jsp" -->
-				<li><a href="..\UserAll\listuser"
+<!-- 				<li><a href="..\UserAll\listuser" -->
+				<li><a href=".\listuser"
 					class="nav-link">買家</a></li>
 <!-- 				<li><a href=".\SellerAll?action=listseller" -->
-				<li><a href="..\SellerAll\listseller"
+<!-- 				<li><a href="..\SellerAll\listseller" -->
+				<li><a href=".\listseller"
 					class="nav-link"><b>賣家</b></a></li>
 				<li><a href="..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+				     <!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+				    	value="${_csrf.token}"/>
+				  		<input type="submit" value="Logout">
+		 			</form>
+				</li>
 			</ul>
 		</nav>
 	</header>
@@ -106,11 +118,13 @@ $(document).ready(function(){
 			<hr>
 			<div class="container text-left">
 <!-- 				<a href=".\SellerAll?action=newseller" class="btn btn-success" >Add -->
-				<a href="..\SellerAll\newseller" class="btn btn-success" >Add
+<!-- 				<a href="..\SellerAll\newseller" class="btn btn-success" >Add -->
+				<a href=".\newseller" class="btn btn-success" >Add
 					New Seller</a>
 
 <!-- 				<a href=".\SellerAll?action=listseller" class="btn btn-success" >Select -->
-				<a href="..\SellerAll\listseller" class="btn btn-success" >Select
+<!-- 				<a href="..\SellerAll\listseller" class="btn btn-success" >Select -->
+				<a href=".\listseller" class="btn btn-success" >Select
 					All Sellers</a>
 					
 				<button type="button" class="btn btn-primary findAll" >AjaxFindAll</button>								
@@ -122,7 +136,7 @@ $(document).ready(function(){
 				  </form>  -->
 			</div>
 			<br>
-			<table id="myTable" class="table table-striped table-bordered table-hover table-sm">
+			<table id="myTable" class="table table-striped table-bordered table-hover">
 				<caption>所有賣家用戶資料</caption>
 				<thead>
 					<tr>
@@ -175,10 +189,12 @@ $(document).ready(function(){
 							<td><c:out value="${seller.businessCert}" /></td>
 							<td><c:out value="${seller.verifyStatus}" /></td>
 <%-- 							<td><a href=".\SellerAll?action=editseller&id=<c:out value='${seller.id}' />">Edit</a> --%>
-							<td><a href="..\SellerAll\editseller\<c:out value='${seller.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆賣家資料');">編輯</button></a>
+<%-- 							<td><a href="..\SellerAll\editseller\<c:out value='${seller.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆賣家資料');">編輯</button></a> --%>
+							<td><a href=".\editseller\<c:out value='${seller.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆賣家資料');">編輯</button></a>
 								&nbsp;&nbsp;&nbsp;&nbsp; 
 <%-- 							<a href=".\SellerAll?action=deleteseller&id=<c:out value='${seller.id}' />">Delete</a></td> --%>
-								<a href="..\SellerAll\deleteseller\<c:out value='${seller.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td>
+<%-- 								<a href="..\SellerAll\deleteseller\<c:out value='${seller.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td> --%>
+								<a href=".\deleteseller\<c:out value='${seller.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td>
 <%-- 							<td><a href="..\SellerAll\ajaxdeleteseller\<c:out value='${seller.id}' />"><button id="ajaxDelete">AjaxDelete</button></a></td> --%>
 							<td><button type="button" class="btn btn-primary delete" >AjaxDelete</button></td>								
 						</tr>

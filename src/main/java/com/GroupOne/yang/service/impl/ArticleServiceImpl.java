@@ -46,4 +46,14 @@ public class ArticleServiceImpl implements ArticleService{
 		articleRepositoty.deleteById(id);
 	}
 
+//	@Override
+//	public List<ArticleBean> findByCategory(String category) {
+//		return articleRepositoty.findByCategory(category);
+//	}
+//
+//	@Override
+//	public List<String> getAllCategory() {
+//		return articleRepositoty.getAllCategory();
+//	}
+	
 }

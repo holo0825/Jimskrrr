@@ -9,10 +9,6 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 	
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-  
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>	
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 // 	$('tbody').on('click', '.delete', function () { //刪除
@@ -64,8 +60,8 @@ $(document).ready(function(){
 
 </head>
 <body>
-	 
-	<%
+	<!--  
+	< %
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -80,26 +76,39 @@ $(document).ready(function(){
 	    out.println("</script>");
 	}*/
 	%>
-	
+	 -->
 	
 	<header>
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: teal"> <!-- default is tomato -->
 			<div>
 <!-- 				<a href="user-list.jsp" class="navbar-brand">  -->
-				<a href="..\UserAll\listuser" class="navbar-brand"> 
+<!-- 				<a href="..\UserAll\listuser" class="navbar-brand">  -->
+				<a href=".\listuser" class="navbar-brand"> 
 					聚點時刻 買家用戶管理系統 </a>
 			</div>
 
 			<ul class="navbar-nav">
 <!-- 				<li><a href=".\UserAll?action=listuser" -->
-				<li><a href="..\UserAll\listuser"
+<!-- 				<li><a href="..\UserAll\listuser" -->
+				<li><a href=".\listuser"
 					class="nav-link"><b>買家</b></a></li>
 <!-- 				<li><a href="seller-list.jsp" -->
-				<li><a href="..\SellerAll\listseller"
+<!-- 				<li><a href="..\SellerAll\listseller" -->
+				<li><a href=".\listseller"
 					class="nav-link">賣家</a></li>
+					
 				<li><a href="..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+					<!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+					    value="${_csrf.token}"/>
+					  	<input type="submit" value="Logout">
+					 </form>
+				</li>
 			</ul>
 		</nav>
 	</header>
@@ -112,11 +121,13 @@ $(document).ready(function(){
 			<hr>
 			<div class="container text-left">
 <!-- 				<a href=".\UserAll?action=newuser" class="btn btn-success" >Add -->
-				<a href="..\UserAll\newuser" class="btn btn-success" >Add
+<!-- 				<a href="..\UserAll\newuser" class="btn btn-success" >Add -->
+				<a href=".\newuser" class="btn btn-success" >Add
 					New User</a>
 
 <!-- 				<a href=".\UserAll?action=listuser" class="btn btn-success" >Select -->
-				<a href="..\UserAll\listuser" class="btn btn-success" >Select
+<!-- 				<a href="..\UserAll\listuser" class="btn btn-success" >Select -->
+				<a href=".\listuser" class="btn btn-success" >Select
 					All Users</a>
 					
 				<button type="button" class="btn btn-primary findAll">AjaxFindAll</button>
@@ -128,7 +139,7 @@ $(document).ready(function(){
 				  </form>  -->
 			</div>
 			<br>
-			<table class="table table-striped table-bordered table-hover ">
+			<table class="table table-striped table-bordered table-hover">
 				<caption>所有買家用戶資料</caption>
 				<thead>
 					<tr>
@@ -169,10 +180,12 @@ $(document).ready(function(){
 							<td><c:out value="${user.homeNumber}" /></td>
 							<td><c:out value="${user.bonusPoint}" /></td>
 <%-- 							<td><a href=".\UserAll?action=edituser&id=<c:out value='${user.id}' />">Edit</a> --%>
-							<td><a href="..\UserAll\edituser\<c:out value='${user.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆買家資料');">編輯</button></a>
+<%-- 							<td><a href="..\UserAll\edituser\<c:out value='${user.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆買家資料');">編輯</button></a> --%>
+							<td><a href=".\edituser\<c:out value='${user.id}' />"><button class="btn btn-warning" onclick="return confirm('請確認是否編輯該筆買家資料');">編輯</button></a>
 								&nbsp;&nbsp;&nbsp;&nbsp; 
 <%-- 							<a href=".\UserAll?action=deleteuser&id=<c:out value='${user.id}' />">Delete</a></td> --%>
-								<a href="..\UserAll\deleteuser\<c:out value='${user.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td>
+<%-- 								<a href="..\UserAll\deleteuser\<c:out value='${user.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td> --%>
+								<a href=".\deleteuser\<c:out value='${user.id}' />"><button class="btn btn-danger" onclick="return confirm('請確認是否刪除該筆買家資料');">刪除</button></a></td>
 <%-- 							<td><a href="..\UserAll\ajaxdeleteuser\<c:out value='${user.id}' />"><button id="ajaxDelete">AjaxDelete</button></a></td> --%>
 							<td><button class="btn btn-primary" type="button" class="delete">AjaxDelete</button></td>
 						</tr>

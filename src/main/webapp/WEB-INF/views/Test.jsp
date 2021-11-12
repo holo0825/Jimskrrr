@@ -41,10 +41,10 @@
         ***********************************-->
 		<div class="nav-header">
 			<a href="index.html" class="brand-logo"> <img class="logo-abbr"
-				src="./images/logo.png" alt=""> <img class="logo-compact"
-				src="./images/logo-text.png" alt=""> <img class="brand-title"
-				src="./images/logo-text.png" alt="">
-			</a>
+                src="../images/logo.png" alt=""> <img class="logo-compact"
+                src="../images/logo-text.png" alt=""> <img class="brand-title"
+                src="../images/logo-text.png" alt="">
+            </a>
  			<div class="nav-control">
                 <div class="hamburger">
                     <span class="line"></span><span class="line"></span><span class="line"></span>
@@ -148,14 +148,8 @@
 					<li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">銷售管理</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./index.html">A</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">B</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./email-compose.html">1</a></li>
-                                    <li><a href="./email-inbox.html">2</a></li>
-                                    <li><a href="./email-read.html">3</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="<c:url value='/admin/AdminCart' />">訂單處理</a></li>
+                            <li><a href="<c:url value='/admin/Adminstatistics' />">商品統計</a></li>
                         </ul>
                     </li>
                     
@@ -164,9 +158,6 @@
                         <ul aria-expanded="false">
                             <li><a href="ActivityRegister">活動管理 明細</a></li>
                             <li><a href="RecordParticipantBack">管理報名者 明細</a></li>
-                            <li><a href="#" >3</a>
-                                
-                            </li>
                         </ul>
                     </li>
                     

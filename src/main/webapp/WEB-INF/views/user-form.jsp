@@ -14,8 +14,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	
-	<%
+	<!-- 
+	< %
 	if(session.getAttribute("admin") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -30,7 +30,7 @@
 	    out.println("</script>");
 	}*/
 	%>
-	 
+	  -->
 	<header>
 		<!-- 套用bootstrap CSS樣式 -->
 		<nav class="navbar navbar-expand-md navbar-dark"
@@ -39,10 +39,12 @@
 			<!-- 導向首頁 -->
 <!-- 				<a href="user-list.jsp" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a> -->
 				<c:if test="${user != null}">
-				<a href="..\..\UserAll\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a>
+<!-- 				<a href="..\..\UserAll\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a> -->
+				<a href="..\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a>
 				</c:if>
 				<c:if test="${user == null}">
-				<a href="..\UserAll\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a>
+<!-- 				<a href="..\UserAll\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a> -->
+				<a href="..\listuser" class="navbar-brand"> 聚點時刻 買家用戶管理系統 </a>
 				</c:if>
 			</div>
 			<!-- 套用bootstrap CSS樣式 -->
@@ -50,28 +52,50 @@
 		<c:if test="${user != null}">
 			<ul class="navbar-nav">
 <!-- 				<li><a href=".\UserAll?action=listuser" -->
-				<li><a href="..\..\UserAll\listuser"
+<!-- 				<li><a href="..\..\UserAll\listuser" -->
+				<li><a href="..\listuser"
 					class="nav-link"><b>買家</b></a></li>
 <!-- 				<li><a href="seller-list.jsp" -->
-				<li><a href="..\..\SellerAll\listseller"
+<!-- 				<li><a href="..\..\SellerAll\listseller" -->
+				<li><a href="..\listseller"
 					class="nav-link">賣家</a></li>
 <!-- 				<li><a href=".\Adminlogout" -->
 				<li><a href="..\..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+					<!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+					    value="${_csrf.token}"/>
+					  <input type="submit" value="Logout">
+					</form>
+				</li>
 			</ul>
 		</c:if>
 		<!-- 新增買家用戶 add user -->	
 		<c:if test="${user == null}">
 			<ul class="navbar-nav">
 <!-- 				<li><a href=".\UserAll?action=listuser" -->
-				<li><a href="..\UserAll\listuser"
+<!-- 				<li><a href="..\UserAll\listuser" -->
+				<li><a href=".\listuser"
 					class="nav-link"><b>買家</b></a></li>
 <!-- 				<li><a href="seller-list.jsp" -->
-				<li><a href="..\SellerAll\listseller"
+<!-- 				<li><a href="..\SellerAll\listseller" -->
+				<li><a href=".\listseller"
 					class="nav-link">賣家</a></li>
 <!-- 				<li><a href=".\Adminlogout" -->
 				<li><a href="..\Adminlogout"
 					class="nav-link" style="color:red">登出</a></li>
+				<li>
+					<!-- Spring Security新增，必須加入才會登出 -->
+					<form action="/logout" method="post">
+					   <input type="hidden"
+					    name="${_csrf.parameterName}"
+					    value="${_csrf.token}"/>
+					  <input type="submit" value="Logout">
+					</form>
+				</li>
 			</ul>
 		</c:if>
 		</nav>
@@ -84,13 +108,15 @@
 				<c:if test="${user != null}">
 <!-- 					<form action=".\UserAll?action=updateuser" method="post"> -->
 <!-- 					<form action="..\..\UserAll\updateuser" method="get"> -->
-					<form action="..\..\UserAll\ajaxupdateuser" method="post" onsubmit="return confirm('請確認是否變更買家用戶資料');">
+<!-- 					<form action="..\..\UserAll\ajaxupdateuser" method="post" onsubmit="return confirm('請確認是否變更買家用戶資料');"> -->
+					<form action="..\ajaxupdateuser" method="post" onsubmit="return confirm('請確認是否變更買家用戶資料');">
 					<input type="hidden" name="_method" value="put" />
 				</c:if>
 				<c:if test="${user == null}">
 <!-- 					<form action=".\UserAll?action=insertuser" method="post"> -->
 <!-- 					<form action="..\UserAll\insertuser" method="get"> -->
-					<form action="..\UserAll\ajaxinsertuser" method="post" onsubmit="return confirm('請確認是否新增買家用戶資料');">
+<!-- 					<form action="..\UserAll\ajaxinsertuser" method="post" onsubmit="return confirm('請確認是否新增買家用戶資料');"> -->
+					<form action=".\ajaxinsertuser" method="post" onsubmit="return confirm('請確認是否新增買家用戶資料');">
 				</c:if>
 
 				<!-- c tag判斷user是否存在，決定顯示選項為edit或add -->

@@ -100,10 +100,10 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                                     <a href="#" title="PAGES" itemprop="url"><span class="red-clr"></span>購物車</a>
                                     <ul class="sub-dropdown">
                                         <li>
-                                            <a href="./CartList/food" title="HOMEPAGE 1" itemprop="url">訂餐</a>
+                                            <a href="<c:url value='/user/CartList/food' />" title="food" itemprop="url">訂餐</a>
                                         </li>
                                         <li>
-                                            <a href="./CartList/coupon" title="HOMEPAGE 2" itemprop="url">團購</a>
+                                            <a href="<c:url value='/user/CartList/coupon' />" title="coupon" itemprop="url">團購</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -111,7 +111,7 @@ response.setDateHeader ("Expires", -1); // Prevents caching at the proxy server
                                     <a href="#" title="PAGES" itemprop="url"><span class="red-clr"></span>會員中心</a>
                                     <ul class="sub-dropdown">
                                         <li>
-                                            <a href="./AllCarts" itemprop="url">訂單紀錄</a>
+                                            <a href="<c:url value='/user/AllCarts' />" itemprop="url">訂單紀錄</a>
                                         </li>
                                     </ul>
                                 </li>

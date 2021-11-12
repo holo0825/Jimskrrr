@@ -1,17 +1,21 @@
 package com.GroupOne.tom.customer.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.GroupOne.tom.customer.service.CustomerService;
 import com.GroupOne.tom.model.CartBean;
 import com.GroupOne.tom.model.SellerProductBean;
+
 
 @Controller
 public class CustomerController{
@@ -26,13 +30,22 @@ public class CustomerController{
 		this.customerService = customerService;
 	}
 	
-	@GetMapping("/Customer")
-	public String customer(Model model) {
+	@GetMapping("customerSearch")
+	public String customerSearch(Model model) {
 		
 		List<SellerProductBean> products = customerService.findAll();
 		
 		model.addAttribute("Products", products);
-		return "customer";   
+		return "groupbuy/customerSearch";   
+	}
+	
+	@GetMapping("customer/{id}")
+	public String customer(Model model, @PathVariable(required = false) Integer id) {
+		
+		Optional<SellerProductBean> product = customerService.findById(id);
+		SellerProductBean customerProduct = product.get();
+		model.addAttribute("Product", customerProduct);
+		return "groupbuy/customer";   
 	}
 	
 	@GetMapping(value = "/CustomerForm")
@@ -58,7 +71,9 @@ public class CustomerController{
 		red.addAttribute("category",cart.getCategory());
 //		model.addAttribute("cart", cart);
 
-		return "redirect:/CartListNew";
+
+		return "redirect:/user/CartListNew";
+
 	}	
 	
 	

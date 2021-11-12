@@ -12,10 +12,11 @@ pageEncoding="UTF-8"%>
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-	<link rel="stylesheet" href="./css/registerStyle.css" type="text/css" />
+	<link rel="stylesheet" href="../css/registerStyle.css" type="text/css" />
 </head>
 <body>
-    <%
+	<!-- 
+    < %
 	if(session.getAttribute("user") == null) {
 	    out.println("<script>");
 	    out.println("alert('權限不足，請先登入');");
@@ -30,17 +31,25 @@ pageEncoding="UTF-8"%>
 	    out.println("</script>");
 	}*/
 	%>
+	 -->
     <div style="text-align: center">
     	<br>
         <h1>編輯買家個人檔案</h1>
         <b>${user.fullname} | ${user.email}</b>
         <br><br>
 <!--         <a href="Userlogout">Logout</a> -->
-        <input type="button" id='backToUserDash' class="btn btn-primary" value='回到個人首頁'> &nbsp;&nbsp;
-		<a href=".\index" class="btn btn-secondary">首頁</a> &nbsp;&nbsp;
-        <a href=".\Userlogout" class="btn btn-danger">登出</a> &nbsp;&nbsp;
-        <a href="./Customer" class="btn btn-info">團購</a> &nbsp;&nbsp;
-        <a href="./top" class="btn btn-info">餐廳</a>
+		<a href="..\">首頁</a> &nbsp;&nbsp;
+        <a href=".\Userlogout">Logout</a> &nbsp;&nbsp;
+        <!-- Spring Security新增，必須加入才會登出 -->
+        <form action="/logout" method="post" style="display:inline">
+		   <input type="hidden"
+		    name="${_csrf.parameterName}"
+		    value="${_csrf.token}"/>
+		  <input type="submit" value="Logout">
+		</form>
+		&nbsp;&nbsp;
+        <a href="../Customer">團購</a> &nbsp;&nbsp;
+        <a href="../top">餐廳</a>
         <!-- 
         <a href="userUpdate.jsp">編輯買家個人資料</a>
          -->
@@ -131,36 +140,31 @@ pageEncoding="UTF-8"%>
             <legend>買家資料上傳</legend>
             <div class="st1">
                 <label for="" class="t1">個人大頭貼：</label>
-                <input type="file" name="file1" accept=".jpg">
                 <br>
-                <span style="margin: 20px; text-decoration: underline;"><b>(JPG格式)</b></span>
+                <div style="text-align: center; ">
+	                <img height='200px' width='400px' style="object-fit: cover;"
+	<%--                 src="<c:url value='/_00_init/getMemberImage?id=${LoginOK.memberId}' />"> --%>
+	                src="<c:url value='/getMemberImage?username=${user.username}' />">
+                </div>
+            </div>
+            <div class="st1" style="text-align: center;">
+                <input type="file" name="file1" accept="image/*">
+                <br>
+                <span style="margin: 20px; text-decoration: underline;"><b>(任何圖片格式)</b></span>
             </div>
         </fieldset>
+        
         <span style="color: red; font-weight: bold;">
-
 		</span>
-	    <br>
+		
         <div class="sub">
-        <input type="button" id='back' class="btn btn-secondary" value='回到上一頁'> &nbsp;&nbsp;
-            <input type="submit" class="btn btn-success" value="送出"> &nbsp;&nbsp;
-            <input type="reset" id="reset" class="btn btn-danger" value="清除">
+            <input type="submit" value="送出">
+            <input type="reset" value="清除">
             <!-- <input type="reset" value="清除" disabled> -->
         </div>
     </form>
     <script>
-		//回上一頁按鈕的JavaScript事件function()
-		document.getElementById('back').onclick = function () {
-            window.history.back();
-        };
-		//回上買家個人首頁按鈕的JavaScript事件function()
-		document.getElementById('backToUserDash').onclick = function () {
-            window.history.back();
-        };
-		//確認是否清除的JavaScript事件function()
-		document.getElementById('reset').onclick = function () {
-            return confirm("請確認是否清除資料");
-        };
-		    	
+    	
 		// 設定date的max屬性為today
 		/*
 		var today = new Date();

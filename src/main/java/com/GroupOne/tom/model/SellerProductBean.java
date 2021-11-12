@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.springframework.web.multipart.MultipartFile;
 @Entity @Table(name = "ProductImformation")
 public class SellerProductBean implements Serializable {
 	/**
@@ -32,17 +36,56 @@ public class SellerProductBean implements Serializable {
  
 	@Column(name="END_DATE")
 	private Date date;
+	
+	@Column(name="IMG")
+	private byte[] picture;
+	
+	@Column(name="PEOPLENOW")
+	private Integer peopleNow;
+	
+	@Column(name="INTRODUCE_PRODUCT")
+	private String introduceProduct;
+	
+	@Column(name="SELLERID")
+	private Integer sellerID;
+	
 
+	
+	
 	
 	public SellerProductBean() {}
 	
-	public SellerProductBean(Integer id, String name, Integer price, Integer people, Date date) {
+	public SellerProductBean(Integer id, String name, Integer price, Integer people,
+			 Date date,byte[] picture,Integer peopleNow,String introduceProduct,Integer sellerID) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.people = people;
 		this.date = date;
+		this.picture = picture;
+		this.introduceProduct = introduceProduct;
+		this.peopleNow = peopleNow;
+		this.sellerID = sellerID;
 	}
+	
+	
+	@Transient
+	 Integer VerificationCode;
+	 
+	 //-----------------上傳'檔案(船幾個就要有幾份)-------------------------------
+	  @Transient  //@Transient告訴spring要忽略  我們自己要用來裝圖片的
+	  private MultipartFile  productImage;  //jsp中 form:input 的path屬性
+
+	  public MultipartFile getProductImage() {
+	      return productImage;
+	  }
+
+	  public void setProductImage(MultipartFile productImage) {
+	      this.productImage = productImage;
+	  }
+	//---------------------------------------------------------------------
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -84,6 +127,40 @@ public class SellerProductBean implements Serializable {
 		this.date = date;
 	}
 
+	public byte[] getPicture() {
+		return picture;
+	}
+
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
+	}
+
+	public Integer getPeopleNow() {
+		return peopleNow;
+	}
+
+	public void setPeopleNow(Integer peopleNow) {
+		this.peopleNow = peopleNow;
+	}
+
+	public Integer getSellerId() {
+		return sellerID;
+	}
+
+	public void setSellerId(Integer sellerID) {
+		this.sellerID = sellerID;
+	}
+
+
+	public String getIntroduceProduct() {
+		return introduceProduct;
+	}
+
+	public void setIntroduceProduct(String introduceProduct) {
+		this.introduceProduct = introduceProduct;
+	}
+	
+	
 	
 
 }

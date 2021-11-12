@@ -4,12 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.members.Member;
 import com.GroupOne.shoppingcarts.model.CartsBean;
 import com.GroupOne.shoppingcarts.model.ListBean;
 import com.GroupOne.shoppingcarts.repository.CartsRepository;
@@ -18,7 +16,6 @@ import com.GroupOne.shoppingcarts.repository.UserPointRepository;
 
 @Repository
 @Transactional
-//@CacheConfig(cacheNames = "listtest")
 public class ProductServiceImpl implements ProductService{
 
 	CartsRepository cartsRepository;
@@ -35,6 +32,11 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	//Cart
+	@Override
+	public CartsBean findByCartItemNo(int itemNo) {
+		return cartsRepository.findByItemNo(itemNo);
+	}
+	
 	@Override
 	public List<CartsBean> findByPaydayNotNull() {
 		return cartsRepository.findByPaydayNotNull();
@@ -67,7 +69,13 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public void updateAmountAndPointsAndPaydayByUsernameAndItemNo(int amount, float points,Date payday, int dicount, int disAmount, String transactionalNum, String username, int itemNo) {
-		cartsRepository.updateAmountAndPointsAndPaydayByUsernameAndItemNo(amount, points, payday, dicount, disAmount, transactionalNum, username, itemNo);;
+		cartsRepository.updateAmountAndPointsAndPaydayByUsernameAndItemNo(amount, points, payday, dicount, disAmount, transactionalNum, username, itemNo);
+		cartsRepository.flush();
+	}
+	
+	@Override
+	public void updateRefundByItemNoCart(String refund,int itemNo) {
+		cartsRepository.updateRefundByItemNo(refund, itemNo);
 		cartsRepository.flush();
 	}
 
@@ -83,7 +91,6 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-//	@Cacheable(key="#p0")
 	public List<ListBean> findByItemNo(int itemNo) {
 		return listRepository.findByItemNo(itemNo);
 	}
@@ -110,8 +117,14 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void updateNumberAndExistByItemNoAndProductName(int number, String exist, int itemNo, String productNmae) {
-		listRepository.updateNumberAndExistByItemNoAndProductName(number, exist, itemNo, productNmae);
+	public void updateExistByItemNo(String exist, int itemNo) {
+		listRepository.updateExistByItemNo(exist, itemNo);
+		listRepository.flush();
+	}
+	
+	@Override
+	public void updateRefundByItemNoList(String refund,int itemNo) {
+		listRepository.updateRefundByItemNo(refund, itemNo);
 		listRepository.flush();
 	}
 
@@ -128,7 +141,7 @@ public class ProductServiceImpl implements ProductService{
 	//User
 	@Override
 	public float findByUsernametoCart(String username) {
-		UserBean ubean = userPointRepository.findByUsername(username);
+		Member ubean = userPointRepository.findByUsername(username);
 		System.out.println("ubean:"+ubean);
 		return ubean.getBonusPoint();
 	}

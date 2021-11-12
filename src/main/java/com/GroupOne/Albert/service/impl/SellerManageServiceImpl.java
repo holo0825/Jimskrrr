@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.GroupOne.Albert.dao.SellerManageDao;
-import com.GroupOne.Albert.model.SellerBean;
+import com.GroupOne.Albert.dao.SellerManageRepository;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.SellerBean;
 import com.GroupOne.Albert.service.SellerManageService;
 
 // Admin管理Seller會員Service實作類別，實作SellerManageService介面
@@ -18,13 +19,11 @@ import com.GroupOne.Albert.service.SellerManageService;
 @Service @Transactional
 public class SellerManageServiceImpl implements SellerManageService {
 
-	private SessionFactory factory;
-	private SellerManageDao smDao;
+	private SellerManageRepository sellerManageRepo;
 	
 	@Autowired
-	public SellerManageServiceImpl(SessionFactory factory, SellerManageDao smDao) {
-		this.factory = factory;
-		this.smDao = smDao;
+	public SellerManageServiceImpl(SellerManageRepository sellerManageRepo) {
+		this.sellerManageRepo = sellerManageRepo;
 	}
 
 //	@Override
@@ -32,8 +31,9 @@ public class SellerManageServiceImpl implements SellerManageService {
 //		smDao.insertSeller(seller);
 //	}
 	@Override
-	public void insertSeller(SellerBean seller) throws SQLException {
-		smDao.save(seller);
+	public void insertSeller(Member seller) throws SQLException {
+//	public void insertSeller(SellerBean seller) throws SQLException {
+		sellerManageRepo.save(seller);
 	}
 
 //	@Override
@@ -41,8 +41,9 @@ public class SellerManageServiceImpl implements SellerManageService {
 //		return smDao.selectSeller(id);
 //	}
 	@Override
-	public SellerBean selectSeller(int id) {
-		return smDao.findById(id).get();
+	public Member selectSeller(int id) {
+//	public SellerBean selectSeller(int id) {
+		return sellerManageRepo.findById(id).get();
 	}
 
 //	@Override
@@ -50,8 +51,9 @@ public class SellerManageServiceImpl implements SellerManageService {
 //		return smDao.selectAllSellers();
 //	}
 	@Override
-	public List<SellerBean> selectAllSellers() {
-		return smDao.findAll();
+	public List<Member> selectAllSellers() {
+//	public List<SellerBean> selectAllSellers() {
+		return sellerManageRepo.findAll();
 	}
 
 //	@Override
@@ -61,7 +63,7 @@ public class SellerManageServiceImpl implements SellerManageService {
 	@Override
 	public boolean deleteSeller(int id) throws SQLException {
 		if (selectSeller(id)!=null) {
-			smDao.deleteById(id);
+			sellerManageRepo.deleteById(id);
 			return true;
 		}
 		return false;
@@ -72,9 +74,10 @@ public class SellerManageServiceImpl implements SellerManageService {
 //		return smDao.updateSeller(seller);
 //	}
 	@Override
-	public boolean updateSeller(SellerBean seller) throws SQLException {
+	public boolean updateSeller(Member seller) throws SQLException {
+//	public boolean updateSeller(SellerBean seller) throws SQLException {
 		if (seller != null) {
-			smDao.save(seller);
+			sellerManageRepo.save(seller);
 			return true;
 		}
 		return false;

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +59,8 @@
          </table>  
       </form:form>
        --%>
+       <!-- OAuth2 Google登入連結 -->
+		<h4><a href="<c:url value='/oauth2/authorization/google'/>">Login with Google</a></h4>	
 		<!-- Spring新版form:form表單 -->
 		<form:form id="loginForm" method="GET" action=".\Adminlogin" modelAttribute="adminLoginBean">
 			<form:label path="email"><span id="must">*</span>Email:</form:label> <form:input id="email1" path="email" type="email" size="30" autofocus="autofocus" required="required"/> <br>
@@ -69,6 +72,8 @@
 			<br>
 			<button type="submit">登入</button>
 			<div style="color:red">${message}</div>
+			<!-- Spring Security新增，必須加入 -->
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form:form>
 		<!-- Servlet舊版form表單 -->
 <%-- 		<form id="loginForm" action=".\Adminlogin?action=adminlogin" method="post"> --%>

@@ -22,11 +22,23 @@ public class ListBean implements Serializable{
 	private int number;
 	private int price;
 	private String exist;
+	private String refund;
 	
 	public ListBean() {
 		super();
 	}
 	
+	public ListBean(int id, int itemNo, String productName, int number, int price, String exist, String refund) {
+		super();
+		this.id = id;
+		this.itemNo = itemNo;
+		this.productName = productName;
+		this.number = number;
+		this.price = price;
+		this.exist = exist;
+		this.refund = refund;
+	}
+
 	public ListBean(int id, int itemNo, String productName, int number, int price, String exist) {
 		super();
 		this.id = id;
@@ -91,6 +103,14 @@ public class ListBean implements Serializable{
 	}
 	public void setExist(String exist) {
 		this.exist = exist;
+	}
+
+	public String getRefund() {
+		return refund;
+	}
+
+	public void setRefund(String refund) {
+		this.refund = refund;
 	}
 	
 	

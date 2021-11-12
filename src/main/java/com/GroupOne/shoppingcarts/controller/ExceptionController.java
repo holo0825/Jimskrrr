@@ -1,23 +1,19 @@
 package com.GroupOne.shoppingcarts.controller;
 
-import java.sql.SQLException;
+//import javax.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class ExceptionController {
 
-	@ExceptionHandler(value = Throwable.class)
-	public String handleError(HttpServletRequest request,Exception e) {
-		return "shopping/test/404";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String handleError(HttpServletRequest request,Exception e) {
+////		HttpStatus status = getStatus(request);
+////		System.out.println("status:"+status);
+//		return "shopping/test/404";
+//	}
 	
 
 }

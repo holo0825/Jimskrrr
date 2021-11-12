@@ -11,11 +11,13 @@ import com.GroupOne.shoppingcarts.model.CartsBean;
 
 public interface CartsRepository extends JpaRepository<CartsBean, Integer>{
 
-//	List<CartsBean> findAllCartByAdmin();//預計新增,尚未使用
+	CartsBean findByItemNo(int itemNo);
+	
+//	List<CartsBean> findAllCartByAdmin();
 	List<CartsBean> findByPaydayNotNull();
 	
 //	List<Object[]> findTwoAmountStatistics();
-	@Query("select c.type,SUM(c.amount) from CartsBean c where c.payday is not null group by c.type")
+	@Query("select c.type,SUM(c.amount) from CartsBean c where c.payday is not null and (c.refund != '已退款' or c.refund is null) group by c.type")
 	List<Object[]> findTwoAmountStatistics();
 	
 //	List<CartsBean> findTwoCart(String username);
@@ -37,4 +39,8 @@ public interface CartsRepository extends JpaRepository<CartsBean, Integer>{
 	
 //	boolean deleteCartByitemNo(CartsBean cartsBean);
 //	void deleteById(int itemNo);
+	
+	@Modifying
+	@Query("update CartsBean c set c.refund = ?1 where c.itemNo = ?2")
+	void updateRefundByItemNo(String refund,int itemNo);
 }

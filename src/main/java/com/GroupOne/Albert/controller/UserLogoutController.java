@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
-import com.GroupOne.Albert.model.UserBean;
+import com.GroupOne.Albert.members.Member;
+import com.GroupOne.Albert.members.oldusers.UserBean;
 
-//Spring框架運用SessionStatus類別的setComplete()方法清除名為user的@SessionAttributes
+//運用SessionStatus類別的setComplete()方法清除名為user的@SessionAttributes
 @Controller
 @SessionAttributes({"user"})
 public class UserLogoutController {
@@ -33,14 +34,11 @@ public class UserLogoutController {
 //			session.removeAttribute("user");
 //			session.invalidate(); //登出時關閉session
 //		}
-		UserBean loggedInUser = (UserBean) model.getAttribute("user");
+		Member loggedInUser = (Member) model.getAttribute("user");
 		if (loggedInUser != null) {
 			status.setComplete(); // 清除該Controller類別列出的@SessionAttributes
 		}
-
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("userLogin.jsp");
-//		dispatcher.forward(request, response);
-//		return "redirect:/UserTryLogin";
+		
 		return "forward:/UserTryLogin";
 	}
 

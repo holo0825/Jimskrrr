@@ -10,7 +10,7 @@ import com.GroupOne.shoppingcarts.model.ListBean;
 public interface ListRepository extends JpaRepository<ListBean, Integer> {
 
 //	List<Object[]> findListAmountStatistics(); // 預計新增,尚未使用
-	@Query("select l.productName,l.price,SUM(l.number),SUM(l.number*l.price) from ListBean l where l.exist ='Y' group by l.productName,l.price order by SUM(l.number*l.price) DESC") //hql
+	@Query("select l.productName,l.price,SUM(l.number),SUM(l.number*l.price) from ListBean l where l.exist ='Y' and l.refund is null group by l.productName,l.price order by SUM(l.number*l.price) DESC") //hql
 	List<Object[]> findListAmountStatistics();
 	
 //	List<ListBean> findAllByItemno(int itemNo);
@@ -29,8 +29,12 @@ public interface ListRepository extends JpaRepository<ListBean, Integer> {
 	
 //	void updateByItemnoAndExist(int number, String exist, int itemNo, String productNmae);
 	@Modifying
-	@Query(value = "update List set number = ?1 ,exist = ?2  where itemNo = ?3 and productName = ?4",nativeQuery = true)
-	void updateNumberAndExistByItemNoAndProductName(int number, String exist, int itemNo, String productName);
+	@Query(value = "update List set exist = ?1 where itemNo = ?2",nativeQuery = true)
+	void updateExistByItemNo(String exist, int itemNo);
+	
+	@Modifying
+	@Query("update ListBean l set l.refund = ?1 where l.itemNo = ?2")
+	void updateRefundByItemNo(String refund,int itemNo);
 	
 //	boolean deleteListByItemNo(ListBean listBean);
 	void deleteByItemNoAndExistIsNull(int itemNO);
